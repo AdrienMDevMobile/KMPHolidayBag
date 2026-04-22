@@ -3,7 +3,7 @@ package m.adrien.kmpholiday
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ComposeAppAndroidUnitTest {
+class ComposeAppCommonTest {
 
     @Test
     fun example() {
