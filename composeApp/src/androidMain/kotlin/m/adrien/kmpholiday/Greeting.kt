@@ -1,4 +1,4 @@
-package m.adrien.kmpdancemanager
+package m.adrien.kmpholiday
 
 class Greeting {
     private val platform = getPlatform()

@@ -1,4 +1,4 @@
-package m.adrien.kmpdancemanager
+package m.adrien.kmpholiday
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

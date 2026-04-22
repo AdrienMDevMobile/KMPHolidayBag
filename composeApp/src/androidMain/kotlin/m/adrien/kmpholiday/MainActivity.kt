@@ -1,4 +1,4 @@
-package m.adrien.kmpdancemanager
+package m.adrien.kmpholiday
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

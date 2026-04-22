@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -37,11 +36,11 @@ kotlin {
 }
 
 android {
-    namespace = "m.adrien.kmpdancemanager"
+    namespace = "m.adrien.kmpholiday"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "m.adrien.kmpdancemanager"
+        applicationId = "m.adrien.kmpholiday"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1

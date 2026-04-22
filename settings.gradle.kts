@@ -1,4 +1,4 @@
-rootProject.name = "KMPDanceManager"
+rootProject.name = "KMPHoliday"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
