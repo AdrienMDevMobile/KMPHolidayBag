@@ -1,4 +1,4 @@
-package m.adrien.kmpholiday.holidays
+package m.adrien.kmpholiday.view.holidays
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

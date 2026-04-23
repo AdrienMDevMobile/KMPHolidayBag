@@ -1,4 +1,4 @@
-package m.adrien.kmpholiday.holiday
+package m.adrien.kmpholiday.view.holiday
 
 import androidx.compose.runtime.Composable
 
