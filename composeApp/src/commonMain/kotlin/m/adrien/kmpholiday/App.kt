@@ -2,11 +2,11 @@ package m.adrien.kmpholiday
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import kotlinx.serialization.Serializable
 import m.adrien.kmpholiday.data.HolidayReminderPreviewsRepositoryStaticImpl
 import m.adrien.kmpholiday.view.holiday.HolidayScreen
 import m.adrien.kmpholiday.view.holidays.HolidaysScreen
@@ -16,20 +16,30 @@ import m.adrien.kmpholiday.view.holidays.HolidaysViewModel
 @Preview
 fun App() {
     MaterialTheme {
-        var currentScreen by remember { mutableStateOf<Screen>(Screen.Holidays) }
+        val navController = rememberNavController()
 
-        when (currentScreen) {
-            Screen.Holidays -> HolidaysScreen(
-                goToHoliday = { currentScreen = Screen.Holiday },
-                viewModel = HolidaysViewModel(HolidayReminderPreviewsRepositoryStaticImpl())
-            )
+        NavHost(
+            navController = navController,
+            startDestination = Holidays
+        ) {
+            composable<Holidays> {
+                HolidaysScreen(
+                    goToHoliday = { id -> navController.navigate(Holiday(id)) },
+                    viewModel = HolidaysViewModel(HolidayReminderPreviewsRepositoryStaticImpl())
+                )
+            }
+            composable<Holiday> { id ->
+                HolidayScreen()
+            }
 
-            Screen.Holiday -> HolidayScreen()
+
         }
+
     }
 }
 
-enum class Screen {
-    Holidays,
-    Holiday
-}
+@Serializable
+object Holidays
+
+@Serializable
+data class Holiday(val id: String)
