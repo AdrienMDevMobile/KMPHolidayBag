@@ -5,6 +5,7 @@ internal object StaticDatas {
         HolidayReminderData(
             name = "Plage",
             id = "1",
+            duration = 7,
             items = listOf(
                 HolidayItemData(
                     name = "Crême solaire",
@@ -23,6 +24,7 @@ internal object StaticDatas {
         HolidayReminderData(
             name = "Week end Danse",
             id = "2",
+            duration = 2,
             items = listOf(
                 HolidayItemData(
                     name = "T shirt",
@@ -35,6 +37,7 @@ internal object StaticDatas {
         HolidayReminderData(
             name = "Ski",
             id = "3",
+            duration = 7,
             items = listOf(
                 HolidayItemData(
                     name = "T shirt",

@@ -8,7 +8,8 @@ fun HolidayItemData.toDomain(): HolidayItem {
         name = this.name,
         id = this.id,
         quantity = this.quantity,
-        isDayDependant = this.isDayDependant
+        checked = false, //TODO
+        isDurationDependant = this.isDayDependant
     )
 }
 
@@ -17,6 +18,6 @@ fun HolidayItem.toData(): HolidayItemData {
         name = this.name,
         id = this.id,
         quantity = this.quantity,
-        isDayDependant = this.isDayDependant
+        isDayDependant = this.isDurationDependant
     )
 }

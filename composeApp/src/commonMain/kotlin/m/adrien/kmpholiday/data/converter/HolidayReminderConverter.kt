@@ -6,16 +6,18 @@ import m.adrien.kmpholiday.domain.HolidayReminderPreview
 
 fun HolidayReminderData.toDomain(): HolidayReminder {
     return HolidayReminder(
-        name = this.name,
         id = this.id,
+        name = this.name,
+        duration = duration,
         items = this.items.map { it.toDomain() }
     )
 }
 
 fun HolidayReminder.toData(): HolidayReminderData {
     return HolidayReminderData(
-        name = this.name,
         id = this.id,
+        name = this.name,
+        duration = duration,
         items = this.items.map { it.toData() }
     )
 }

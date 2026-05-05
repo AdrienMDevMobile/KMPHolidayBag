@@ -28,7 +28,8 @@ fun App() {
                     viewModel = HolidaysViewModel(HolidayReminderPreviewsRepositoryStaticImpl())
                 )
             }
-            composable<Holiday> { id ->
+            composable<Holiday> {
+
                 HolidayScreen()
             }
 
@@ -42,4 +43,4 @@ fun App() {
 object Holidays
 
 @Serializable
-data class Holiday(val id: String)
+data class Holiday(val holidayId: String)

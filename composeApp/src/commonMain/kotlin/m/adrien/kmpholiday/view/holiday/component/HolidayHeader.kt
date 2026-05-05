@@ -1,4 +1,4 @@
-package m.adrien.kmpholiday.view.holiday
+package m.adrien.kmpholiday.view.holiday.component
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions

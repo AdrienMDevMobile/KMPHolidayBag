@@ -1,4 +1,4 @@
-package m.adrien.kmpholiday.view.holiday
+package m.adrien.kmpholiday.view.holiday.value
 
 data class HolidayItemUiState(
     val name: String,
