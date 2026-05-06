@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import m.adrien.kmpholiday.view.shared.ErrorPage
+import m.adrien.kmpholiday.view.shared.LoadingPage
 
 @Composable
 fun HolidaysScreen(
@@ -39,11 +41,11 @@ fun HolidaysPage(
     ) {
         when (uiState) {
             is HolidayRemindersUiState.Loading -> {
-                CircularProgressIndicator()
+                LoadingPage()
             }
 
             is HolidayRemindersUiState.Error -> {
-                Text("Error: ${uiState.message}", color = MaterialTheme.colorScheme.error)
+                ErrorPage("Error: ${uiState.message}")
             }
 
             is HolidayRemindersUiState.Success -> {
@@ -51,23 +53,6 @@ fun HolidaysPage(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun HolidaysPagePreview() {
-    HolidaysPage(
-        uiState = HolidayRemindersUiState.Loading, {}
-    )
-}
-
-@Preview
-@Composable
-fun HolidaysPageErrorPreview() {
-    HolidaysPage(
-        uiState = HolidayRemindersUiState.Error("Failed to load holidays"),
-        {}
-    )
 }
 
 @Preview
@@ -80,6 +65,23 @@ fun HolidaysPageSuccessPreview() {
     )
     HolidaysPage(
         uiState = HolidayRemindersUiState.Success(sampleReminders),
+        {}
+    )
+}
+
+@Preview
+@Composable
+fun HolidaysPageLoadingPreview() {
+    HolidaysPage(
+        uiState = HolidayRemindersUiState.Loading, {}
+    )
+}
+
+@Preview
+@Composable
+fun HolidaysPageErrorPreview() {
+    HolidaysPage(
+        uiState = HolidayRemindersUiState.Error("Failed to load holidays"),
         {}
     )
 }

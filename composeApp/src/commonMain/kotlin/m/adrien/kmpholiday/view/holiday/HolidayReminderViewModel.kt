@@ -9,23 +9,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import m.adrien.kmpholiday.domain.HolidayReminderId
 import m.adrien.kmpholiday.domain.repository.HolidayReminderRepository
 import m.adrien.kmpholiday.view.holiday.value.HolidayItemUiState
 import m.adrien.kmpholiday.view.holiday.value.HolidayReminderUiState
 import m.adrien.kmpholiday.view.holiday.value.toUiState
-
-/*
-class HolidayReminderViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
-    @OptIn(SavedStateHandleSaveableApi::class)
-    private val holidayId = savedStateHandle.get<String>("holidayId")
-
-    //val uiState: StateFlow<HolidayReminderUiState>
-}
-*/
-
 
 class HolidayReminderViewModel(
     holidayRepository: HolidayReminderRepository,
@@ -36,12 +27,14 @@ class HolidayReminderViewModel(
 
     // UI State
     private val uiState: StateFlow<HolidayReminderUiState> =
-        holidayRepository.get(holidayId).map { data -> data.toUiState() }
+        holidayRepository.get(holidayId)
+            .map { data -> data.toUiState() }
+            .onStart { emit(HolidayReminderUiState.Loading) }
+            .catch { emit(HolidayReminderUiState.Error(it.message ?: "Unknown error")) }
             .stateIn(
-                scope = viewModelScope, started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = HolidayReminderUiState(
-                    "", 0, emptyList() //TODO
-                )
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = HolidayReminderUiState.Loading
             )
 
     // Editing state

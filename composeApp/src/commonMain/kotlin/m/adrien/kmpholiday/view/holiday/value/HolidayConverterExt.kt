@@ -3,7 +3,7 @@ package m.adrien.kmpholiday.view.holiday.value
 import m.adrien.kmpholiday.domain.HolidayReminder
 
 fun HolidayReminder.toUiState(): HolidayReminderUiState {
-    return HolidayReminderUiState(
+    return HolidayReminderUiState.Value(
         name = this.name,
         durationDay = this.duration,
         items = this.items.map { item ->
