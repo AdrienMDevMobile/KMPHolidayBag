@@ -46,6 +46,9 @@ kotlin {
             implementation(libs.material.icons.extended)
             implementation(libs.androidx.navigation.compose)
         }
+        androidMain.dependencies {
+            implementation(libs.androidx.datastore.preferences)
+        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
