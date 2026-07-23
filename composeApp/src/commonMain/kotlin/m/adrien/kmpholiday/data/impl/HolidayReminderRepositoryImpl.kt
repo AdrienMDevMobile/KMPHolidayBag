@@ -16,14 +16,11 @@ class HolidayReminderRepositoryImpl(
 ) : HolidayReminderRepository {
 
     override fun get(id: HolidayReminderId): Flow<HolidayReminder> = flow {
-        // 1. Récupérer les données statiques de base
         val staticData = StaticDatas.listOfHolidayReminder.find { it.id == id }
 
         if (staticData != null) {
-            // 2. Récupérer la durée depuis le cache (si disponible) ou utiliser la durée par défaut
             val cachedDuration = holidayReminderInstanceCache.getReminderInstance(id) ?: staticData.duration
 
-            // 3. Créer le HolidayReminder complet en combinant données statiques et durée dynamique
             val holidayReminder = HolidayReminder(
                 id = staticData.id,
                 name = staticData.name,
