@@ -1,3 +1,3 @@
 package m.adrien.kmpholiday.domain
 
-typealias HolidayReminderPreviews = List<HolidayReminderPreview>
+typealias HolidayReminderPreviews = List<HolidayBagReminderPreview>

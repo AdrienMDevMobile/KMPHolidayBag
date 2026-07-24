@@ -1,8 +1,8 @@
 package m.adrien.kmpholiday.view.holiday.value
 
-import m.adrien.kmpholiday.domain.HolidayReminder
+import m.adrien.kmpholiday.domain.HolidayBagReminder
 
-fun HolidayReminder.toUiState(): HolidayReminderUiState {
+fun HolidayBagReminder.toUiState(): HolidayReminderUiState {
     return HolidayReminderUiState.Value(
         name = this.name,
         durationDay = this.duration,

@@ -1,11 +1,11 @@
 package m.adrien.kmpholiday.data.converter
 
 import m.adrien.kmpholiday.data.HolidayReminderData
-import m.adrien.kmpholiday.domain.HolidayReminder
-import m.adrien.kmpholiday.domain.HolidayReminderPreview
+import m.adrien.kmpholiday.domain.HolidayBagReminder
+import m.adrien.kmpholiday.domain.HolidayBagReminderPreview
 
-fun HolidayReminderData.toDomain(): HolidayReminder {
-    return HolidayReminder(
+fun HolidayReminderData.toDomain(): HolidayBagReminder {
+    return HolidayBagReminder(
         id = this.id,
         name = this.name,
         duration = duration,
@@ -13,7 +13,7 @@ fun HolidayReminderData.toDomain(): HolidayReminder {
     )
 }
 
-fun HolidayReminder.toData(): HolidayReminderData {
+fun HolidayBagReminder.toData(): HolidayReminderData {
     return HolidayReminderData(
         id = this.id,
         name = this.name,
@@ -22,15 +22,15 @@ fun HolidayReminder.toData(): HolidayReminderData {
     )
 }
 
-fun HolidayReminderData.toPreview(): HolidayReminderPreview {
-    return HolidayReminderPreview(
+fun HolidayReminderData.toPreview(): HolidayBagReminderPreview {
+    return HolidayBagReminderPreview(
         name = this.name,
         id = this.id
     )
 }
 
-fun HolidayReminder.toPreview(): HolidayReminderPreview {
-    return HolidayReminderPreview(
+fun HolidayBagReminder.toPreview(): HolidayBagReminderPreview {
+    return HolidayBagReminderPreview(
         name = this.name,
         id = this.id
     )

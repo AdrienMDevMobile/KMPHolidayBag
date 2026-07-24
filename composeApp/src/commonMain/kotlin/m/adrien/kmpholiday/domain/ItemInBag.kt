@@ -1,6 +1,6 @@
 package m.adrien.kmpholiday.domain
 
-data class HolidayItem(
+data class ItemInBag(
     val name: String,
     val id: HolidayItemId,
     val checked: Boolean,
