@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import m.adrien.kmpholiday.data.impl.HolidayBagReminderRepositoryImpl
-import java.util.UUID
 import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
 import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
@@ -71,7 +70,7 @@ class HolidayBagReminderViewModel(
 
     fun toggleItemChecked(itemId: String, checked: Boolean) {
         viewModelScope.launch {
-            holidayRepository.check(holidayId, itemId, checked)
+            holidayRepository.checkItemInBag(holidayId, itemId, checked)
         }
     }
 

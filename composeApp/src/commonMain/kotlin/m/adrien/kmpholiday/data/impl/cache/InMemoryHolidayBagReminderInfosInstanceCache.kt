@@ -22,6 +22,15 @@ class InMemoryHolidayBagReminderInfosInstanceCache : HolidayBagReminderInfosInst
         }.update { reminderData }
     }
 
+    override suspend fun setReminderInstanceDuration(holidayId: String, duration: Int) {
+        val currentFlow = reminderDataMap.getOrPut(holidayId) {
+            MutableStateFlow(null)
+        }
+        val currentData = currentFlow.value ?: HolidayReminderInstanceData(holidayId, 0, emptyList())
+        val updatedData = currentData.copy(duration = duration)
+        currentFlow.update { updatedData }
+    }
+
     override suspend fun checkItem(
         holidayId: String,
         itemId: String,

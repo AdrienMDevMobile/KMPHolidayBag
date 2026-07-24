@@ -46,9 +46,14 @@ class HolidayBagReminderRepositoryImpl(
         }
     }
 
-    override suspend fun check(holidayId: HolidayBagReminderId, itemId: ItemInBagId, checked: Boolean): Boolean {
+    override suspend fun checkItemInBag(holidayId: HolidayBagReminderId, itemId: ItemInBagId, checked: Boolean): Boolean {
         holidayReminderInstanceCache.checkItem(holidayId, itemId, checked)
         return true //TODO
+    }
+
+    override suspend fun setHolidayDuration(holidayId: HolidayBagReminderId, duration: Int): Boolean {
+        holidayReminderInstanceCache.setReminderInstanceDuration(holidayId, duration)
+        return true
     }
 
     override suspend fun edit(itemId: ItemInBagId, newItem: ItemInBag): Boolean {
@@ -61,13 +66,9 @@ class HolidayBagReminderRepositoryImpl(
     override suspend fun reset(id: HolidayBagReminderId): Boolean {
         // Réinitialiser signifie supprimer les données personnalisées du cache
         // et revenir aux valeurs par défaut
-        holidayReminderInstanceCache.saveReminderInstance(
+        holidayReminderInstanceCache.setReminderInstanceDuration(
             id, 
-            HolidayReminderInstanceData(
-                id = id,
-                duration = 0, // Default duration
-                itemChecked = emptyList() // No items checked by default
-            )
+            0 // Default duration
         )
         return true
     }

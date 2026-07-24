@@ -37,6 +37,22 @@ class DataStoreHolidayBagReminderInfosInstanceCache(private val context: Context
         }
     }
 
+    override suspend fun setReminderInstanceDuration(holidayId: String, duration: Int) {
+        val key = stringPreferencesKey("$REMINDER_PREFIX$holidayId")
+        val currentData = context.dataStore.data.first()
+        val currentJson = currentData[key]
+        
+        val currentReminder = currentJson?.let { json.decodeFromString<HolidayReminderInstanceData>(it) }
+            ?: HolidayReminderInstanceData(holidayId, 0, emptyList())
+        
+        val updatedReminder = currentReminder.copy(duration = duration)
+        val updatedJson = json.encodeToString(updatedReminder)
+        
+        context.dataStore.edit { preferences ->
+            preferences[key] = updatedJson
+        }
+    }
+
     override suspend fun checkItem(
         holidayId: String,
         itemId: String,
