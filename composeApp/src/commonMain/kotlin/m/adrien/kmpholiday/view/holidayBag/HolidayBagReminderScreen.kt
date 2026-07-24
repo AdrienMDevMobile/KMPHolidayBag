@@ -27,6 +27,7 @@ fun HolidayBagReminderScreen(
     val uiState by viewModel.uiState.collectAsState()
     HolidayBagReminderPage(
         uiState = uiState,
+        onEditModeToggle = { viewModel.toggleEditMode() },
         onItemCheckedChange = { itemId, checked -> viewModel.toggleItemChecked(itemId, checked) },
         onDurationChange = { duration -> viewModel.changeHolidayDuration(duration) }
     )
@@ -35,6 +36,7 @@ fun HolidayBagReminderScreen(
 @Composable
 fun HolidayBagReminderPage(
     uiState: HolidayBagReminderUiState,
+    onEditModeToggle: () -> Unit,
     onItemCheckedChange: (String, Boolean) -> Unit,
     onDurationChange: (Int) -> Unit,
 ) {
@@ -57,6 +59,8 @@ fun HolidayBagReminderPage(
                     HolidayHeader(
                         name = uiState.name,
                         durationDay = uiState.durationDay,
+                        isEditing = uiState.isEditing,
+                        onEditModeToggle = onEditModeToggle,
                         onDurationChange = onDurationChange,
                     )
 
@@ -101,8 +105,10 @@ fun HolidayBagReminderScreenPreview() {
                         checked = true,
                         quantity = 3
                     )
-                )
+                ),
+                isEditing = false
             ),
+            onEditModeToggle = { },
             onItemCheckedChange = { string: String, bool: Boolean -> },
             onDurationChange = { }
         )
@@ -117,8 +123,10 @@ fun HolidayBagReminderScreenEmptyPreview() {
             uiState = HolidayBagReminderUiState.Value(
                 name = "Winter Getaway",
                 durationDay = 7,
-                items = emptyList()
+                items = emptyList(),
+                isEditing = false
             ),
+            onEditModeToggle = { },
             onItemCheckedChange = { string: String, bool: Boolean -> },
             onDurationChange = { }
         )
@@ -131,6 +139,7 @@ fun HolidayBagReminderScreenLoadingPreview() {
     MaterialTheme {
         HolidayBagReminderPage(
             uiState = HolidayBagReminderUiState.Loading,
+            onEditModeToggle = { },
             onItemCheckedChange = { string: String, bool: Boolean -> },
             onDurationChange = { }
         )
@@ -143,6 +152,38 @@ fun HolidayBagReminderScreenErrorPreview() {
     MaterialTheme {
         HolidayBagReminderPage(
             uiState = HolidayBagReminderUiState.Error("Failed to load holiday data"),
+            onEditModeToggle = { },
+            onItemCheckedChange = { string: String, bool: Boolean -> },
+            onDurationChange = { }
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HolidayBagReminderScreenEditingPreview() {
+    MaterialTheme {
+        HolidayBagReminderPage(
+            uiState = HolidayBagReminderUiState.Value(
+                name = "Summer Vacation",
+                durationDay = 14,
+                items = listOf(
+                    ItemInBagUiState(
+                        id = "swimsuit",
+                        name = "Swimsuit",
+                        checked = true,
+                        quantity = 2
+                    ),
+                    ItemInBagUiState(
+                        id = "sunglasses",
+                        name = "Sunglasses",
+                        checked = false,
+                        quantity = 1
+                    )
+                ),
+                isEditing = true
+            ),
+            onEditModeToggle = { },
             onItemCheckedChange = { string: String, bool: Boolean -> },
             onDurationChange = { }
         )

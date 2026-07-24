@@ -49,9 +49,19 @@ class HolidayBagReminderViewModel(
     @OptIn(SavedStateHandleSaveableApi::class)
     private val holidayId = savedStateHandle.get<String>("holidayId") ?: ""
 
+    // Editing state
+    private var isEditing by mutableStateOf(false)
+
     val uiState: StateFlow<HolidayBagReminderUiState> =
         holidayRepository.get(holidayId)
-            .map { data -> data.toUiState() }
+            .map { data -> 
+                val baseUiState = data.toUiState()
+                if (baseUiState is HolidayBagReminderUiState.Value) {
+                    baseUiState.copy(isEditing = isEditing)
+                } else {
+                    baseUiState
+                }
+            }
             .onStart { emit(HolidayBagReminderUiState.Loading) }
             .catch { emit(HolidayBagReminderUiState.Error(it.message ?: "Unknown error")) }
             .stateIn(
@@ -59,10 +69,6 @@ class HolidayBagReminderViewModel(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = HolidayBagReminderUiState.Loading
             )
-
-    // Editing state
-    var isEditing by mutableStateOf(false)
-        private set
 
     fun toggleEditMode() {
         isEditing = !isEditing

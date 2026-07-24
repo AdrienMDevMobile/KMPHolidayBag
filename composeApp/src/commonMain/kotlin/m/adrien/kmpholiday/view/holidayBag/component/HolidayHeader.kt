@@ -32,12 +32,12 @@ import androidx.compose.ui.unit.sp
 fun HolidayHeader(
     name: String,
     durationDay: Int,
+    isEditing: Boolean,
+    onEditModeToggle: () -> Unit,
     onDurationChange: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-    isEditingDefault: Boolean = false
+    modifier: Modifier = Modifier
 ) {
     var durationText by remember { mutableStateOf(durationDay.toString()) }
-    var isEditing by remember { mutableStateOf(isEditingDefault) }
 
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -62,16 +62,16 @@ fun HolidayHeader(
                 onSave = {
                     val newDuration = durationText.toIntOrNull() ?: durationDay
                     onDurationChange(newDuration)
-                    isEditing = false
+                    onEditModeToggle()
                 },
                 onCancel = {
-                    isEditing = false
+                    onEditModeToggle()
                 }
             )
         } else {
             HolidayHeaderDisplayMode(
                 durationDay = durationDay,
-                onEditClick = { isEditing = true }
+                onEditClick = { onEditModeToggle() }
             )
         }
     }
@@ -141,8 +141,9 @@ fun HolidayHeaderPreview() {
         HolidayHeader(
             name = "Summer Vacation",
             durationDay = 14,
-            onDurationChange = { },
-            isEditingDefault = false,
+            isEditing = false,
+            onEditModeToggle = { },
+            onDurationChange = { }
         )
     }
 }
@@ -154,8 +155,9 @@ fun HolidayHeaderPreviewEditing() {
         HolidayHeader(
             name = "Summer Vacation",
             durationDay = 14,
-            onDurationChange = { },
-            isEditingDefault = true,
+            isEditing = true,
+            onEditModeToggle = { },
+            onDurationChange = { }
         )
     }
 }

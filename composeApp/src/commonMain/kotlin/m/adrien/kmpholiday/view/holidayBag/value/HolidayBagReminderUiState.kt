@@ -6,7 +6,8 @@ sealed class HolidayBagReminderUiState {
     data class Value(
         val name: String,
         val durationDay: Int,
-        val items: List<ItemInBagUiState>
+        val items: List<ItemInBagUiState>,
+        val isEditing: Boolean = false
     ) : HolidayBagReminderUiState()
     
     data class Error(val message: String) : HolidayBagReminderUiState()
