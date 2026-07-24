@@ -9,8 +9,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class DataStoreHolidayBagReminderInstanceCache(private val context: Context) :
-    HolidayBagReminderInstanceCache {
+class DataStoreHolidayBagReminderInfosInstanceCache(private val context: Context) :
+    HolidayBagReminderInfosInstanceCache {
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "holiday_reminder_cache")
         private val DURATION_PREFIX = "holiday_duration_"

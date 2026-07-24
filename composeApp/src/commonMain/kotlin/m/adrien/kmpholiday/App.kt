@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
-import m.adrien.kmpholiday.data.HolidayBagReminderPreviewsRepositoryStaticImpl
+import m.adrien.kmpholiday.data.impl.HolidayBagReminderPreviewsRepositoryStaticImpl
 import m.adrien.kmpholiday.view.holiday.HolidayScreen
 import m.adrien.kmpholiday.view.holidays.HolidaysScreen
 import m.adrien.kmpholiday.view.holidays.HolidaysViewModel

@@ -1,11 +1,13 @@
-package m.adrien.kmpholiday.data
+package m.adrien.kmpholiday.data.impl
+
+import m.adrien.kmpholiday.data.HolidayReminderFrameworkData
+import m.adrien.kmpholiday.data.ItemInBagData
 
 internal object StaticDatas {
     val listOfHolidayBagReminder = listOf(
-        HolidayBagReminderData(
+        HolidayReminderFrameworkData(
             name = "Plage",
             id = "1",
-            duration = 7,
             items = listOf(
                 ItemInBagData(
                     name = "Crême solaire",
@@ -21,10 +23,9 @@ internal object StaticDatas {
                 )
             )
         ),
-        HolidayBagReminderData(
+        HolidayReminderFrameworkData(
             name = "Week end Danse",
             id = "2",
-            duration = 2,
             items = listOf(
                 ItemInBagData(
                     name = "T shirt",
@@ -34,10 +35,9 @@ internal object StaticDatas {
                 )
             )
         ),
-        HolidayBagReminderData(
+        HolidayReminderFrameworkData(
             name = "Ski",
             id = "3",
-            duration = 7,
             items = listOf(
                 ItemInBagData(
                     name = "T shirt",

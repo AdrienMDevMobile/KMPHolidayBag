@@ -2,9 +2,8 @@ package m.adrien.kmpholiday.data.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import m.adrien.kmpholiday.data.StaticDatas
 import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderCacheFactory
-import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderInstanceCache
+import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderInfosInstanceCache
 import m.adrien.kmpholiday.domain.ItemInBag
 import m.adrien.kmpholiday.domain.ItemInBagId
 import m.adrien.kmpholiday.domain.HolidayBagReminder
@@ -12,7 +11,7 @@ import m.adrien.kmpholiday.domain.HolidayBagReminderId
 import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
 
 class HolidayBagReminderRepositoryImpl(
-    private val holidayReminderInstanceCache: HolidayBagReminderInstanceCache = HolidayBagReminderCacheFactory.createCache()
+    private val holidayReminderInstanceCache: HolidayBagReminderInfosInstanceCache = HolidayBagReminderCacheFactory.createCache()
 ) : HolidayBagReminderRepository {
 
     override fun get(id: HolidayBagReminderId): Flow<HolidayBagReminder> = flow {

@@ -9,10 +9,10 @@ actual object HolidayBagReminderCacheFactory {
         applicationContext = context.applicationContext
     }
     
-    actual fun createCache(): HolidayBagReminderInstanceCache {
+    actual fun createCache(): HolidayBagReminderInfosInstanceCache {
         if (!::applicationContext.isInitialized) {
             throw IllegalStateException("HolidayBagReminderCacheFactory must be initialized with a Context first")
         }
-        return DataStoreHolidayBagReminderInstanceCache(applicationContext)
+        return DataStoreHolidayBagReminderInfosInstanceCache(applicationContext)
     }
 }
