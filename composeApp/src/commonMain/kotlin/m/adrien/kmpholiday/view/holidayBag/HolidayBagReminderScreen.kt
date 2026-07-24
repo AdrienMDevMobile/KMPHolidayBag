@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import m.adrien.kmpholiday.view.holidayBag.HolidayBagReminderViewModel
 import m.adrien.kmpholiday.view.holidayBag.component.HolidayHeader
 import m.adrien.kmpholiday.view.holidayBag.component.ItemsInBagList
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
@@ -22,7 +23,7 @@ import m.adrien.kmpholiday.view.shared.LoadingPage
 
 @Composable
 fun HolidayBagReminderScreen(
-    viewModel: HolidayBagReminderViewModel = viewModel()
+    viewModel: HolidayBagReminderViewModel = viewModel(factory = HolidayBagReminderViewModel.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
     HolidayBagReminderPage(uiState)
