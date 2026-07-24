@@ -27,14 +27,16 @@ fun HolidayBagReminderScreen(
     val uiState by viewModel.uiState.collectAsState()
     HolidayBagReminderPage(
         uiState = uiState,
-        onItemCheckedChange = { itemId, checked -> viewModel.toggleItemChecked(itemId, checked) }
+        onItemCheckedChange = { itemId, checked -> viewModel.toggleItemChecked(itemId, checked) },
+        onDurationChange = { duration -> viewModel.changeHolidayDuration(duration) }
     )
 }
 
 @Composable
 fun HolidayBagReminderPage(
     uiState: HolidayBagReminderUiState,
-    onItemCheckedChange: (String, Boolean) -> Unit = { _, _ -> }
+    onItemCheckedChange: (String, Boolean) -> Unit,
+    onDurationChange: (Int) -> Unit,
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -55,7 +57,7 @@ fun HolidayBagReminderPage(
                     HolidayHeader(
                         name = uiState.name,
                         durationDay = uiState.durationDay,
-                        onDurationChange = { /* TODO: Handle duration change */ }
+                        onDurationChange = onDurationChange,
                     )
 
                     ItemsInBagList(
@@ -100,7 +102,9 @@ fun HolidayBagReminderScreenPreview() {
                         quantity = 3
                     )
                 )
-            )
+            ),
+            onItemCheckedChange = { string: String, bool: Boolean -> },
+            onDurationChange = { }
         )
     }
 }
@@ -114,7 +118,9 @@ fun HolidayBagReminderScreenEmptyPreview() {
                 name = "Winter Getaway",
                 durationDay = 7,
                 items = emptyList()
-            )
+            ),
+            onItemCheckedChange = { string: String, bool: Boolean -> },
+            onDurationChange = { }
         )
     }
 }
@@ -124,7 +130,9 @@ fun HolidayBagReminderScreenEmptyPreview() {
 fun HolidayBagReminderScreenLoadingPreview() {
     MaterialTheme {
         HolidayBagReminderPage(
-            uiState = HolidayBagReminderUiState.Loading
+            uiState = HolidayBagReminderUiState.Loading,
+            onItemCheckedChange = { string: String, bool: Boolean -> },
+            onDurationChange = { }
         )
     }
 }
@@ -134,7 +142,9 @@ fun HolidayBagReminderScreenLoadingPreview() {
 fun HolidayBagReminderScreenErrorPreview() {
     MaterialTheme {
         HolidayBagReminderPage(
-            uiState = HolidayBagReminderUiState.Error("Failed to load holiday data")
+            uiState = HolidayBagReminderUiState.Error("Failed to load holiday data"),
+            onItemCheckedChange = { string: String, bool: Boolean -> },
+            onDurationChange = { }
         )
     }
 }

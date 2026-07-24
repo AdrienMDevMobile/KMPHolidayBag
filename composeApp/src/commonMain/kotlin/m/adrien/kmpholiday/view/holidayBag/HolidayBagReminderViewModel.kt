@@ -74,6 +74,12 @@ class HolidayBagReminderViewModel(
         }
     }
 
+    fun changeHolidayDuration(duration: Int) {
+        viewModelScope.launch {
+            holidayRepository.setHolidayDuration(holidayId, duration)
+        }
+    }
+
     /*
     fun updateHolidayName(newName: String) {
         _uiState.value = _uiState.value.copy(name = newName)
