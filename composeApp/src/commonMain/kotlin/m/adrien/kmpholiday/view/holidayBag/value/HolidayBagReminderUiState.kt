@@ -1,4 +1,4 @@
-package m.adrien.kmpholiday.view.holiday.value
+package m.adrien.kmpholiday.view.holidayBag.value
 
 sealed class HolidayBagReminderUiState {
     data object Loading : HolidayBagReminderUiState()

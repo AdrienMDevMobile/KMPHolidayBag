@@ -1,18 +1,35 @@
-package m.adrien.kmpholiday.view.holiday.component
+package m.adrien.kmpholiday.view.holidayBag
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import m.adrien.kmpholiday.view.holiday.value.ItemInBagUiState
-import m.adrien.kmpholiday.view.holiday.value.HolidayBagReminderUiState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import m.adrien.kmpholiday.view.holidayBag.component.HolidayHeader
+import m.adrien.kmpholiday.view.holidayBag.component.ItemsInBagList
+import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
+import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 import m.adrien.kmpholiday.view.shared.ErrorPage
 import m.adrien.kmpholiday.view.shared.LoadingPage
 
 @Composable
-fun HolidayBagReminderScreen(uiState: HolidayBagReminderUiState) {
+fun HolidayBagReminderScreen(
+    viewModel: HolidayBagReminderViewModel = viewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    HolidayBagReminderPage(uiState)
+}
+
+@Composable
+fun HolidayBagReminderPage(uiState: HolidayBagReminderUiState) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -21,6 +38,7 @@ fun HolidayBagReminderScreen(uiState: HolidayBagReminderUiState) {
             HolidayBagReminderUiState.Loading -> {
                 LoadingPage()
             }
+
             is HolidayBagReminderUiState.Value -> {
                 Column(
                     modifier = Modifier
@@ -37,6 +55,7 @@ fun HolidayBagReminderScreen(uiState: HolidayBagReminderUiState) {
                     ItemsInBagList(items = uiState.items)
                 }
             }
+
             is HolidayBagReminderUiState.Error -> {
                 ErrorPage(errorMessage = uiState.message)
             }
@@ -48,7 +67,7 @@ fun HolidayBagReminderScreen(uiState: HolidayBagReminderUiState) {
 @Composable
 fun HolidayBagReminderScreenPreview() {
     MaterialTheme {
-        HolidayBagReminderScreen(
+        HolidayBagReminderPage(
             uiState = HolidayBagReminderUiState.Value(
                 name = "Summer Vacation",
                 durationDay = 14,
@@ -78,7 +97,7 @@ fun HolidayBagReminderScreenPreview() {
 @Composable
 fun HolidayBagReminderScreenEmptyPreview() {
     MaterialTheme {
-        HolidayBagReminderScreen(
+        HolidayBagReminderPage(
             uiState = HolidayBagReminderUiState.Value(
                 name = "Winter Getaway",
                 durationDay = 7,
@@ -92,7 +111,7 @@ fun HolidayBagReminderScreenEmptyPreview() {
 @Composable
 fun HolidayBagReminderScreenLoadingPreview() {
     MaterialTheme {
-        HolidayBagReminderScreen(
+        HolidayBagReminderPage(
             uiState = HolidayBagReminderUiState.Loading
         )
     }
@@ -102,7 +121,7 @@ fun HolidayBagReminderScreenLoadingPreview() {
 @Composable
 fun HolidayBagReminderScreenErrorPreview() {
     MaterialTheme {
-        HolidayBagReminderScreen(
+        HolidayBagReminderPage(
             uiState = HolidayBagReminderUiState.Error("Failed to load holiday data")
         )
     }

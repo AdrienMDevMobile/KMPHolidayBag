@@ -1,4 +1,4 @@
-package m.adrien.kmpholiday.view.holiday.component
+package m.adrien.kmpholiday.view.holidayBag.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import m.adrien.kmpholiday.view.holiday.value.ItemInBagUiState
+import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 
 @Composable
 fun ItemInBag(

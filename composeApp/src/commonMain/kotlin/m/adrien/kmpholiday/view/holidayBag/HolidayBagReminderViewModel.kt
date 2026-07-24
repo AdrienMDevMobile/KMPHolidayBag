@@ -1,4 +1,4 @@
-package m.adrien.kmpholiday.view.holiday
+package m.adrien.kmpholiday.view.holidayBag
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,20 +13,20 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import m.adrien.kmpholiday.data.impl.HolidayBagReminderRepositoryImpl
 import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
-import m.adrien.kmpholiday.view.holiday.value.ItemInBagUiState
-import m.adrien.kmpholiday.view.holiday.value.HolidayBagReminderUiState
-import m.adrien.kmpholiday.view.holiday.value.toUiState
+import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
+import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
+import m.adrien.kmpholiday.view.holidayBag.value.toUiState
 
 class HolidayBagReminderViewModel(
-    holidayRepository: HolidayBagReminderRepository,
-    savedStateHandle: SavedStateHandle
+    holidayRepository: HolidayBagReminderRepository = HolidayBagReminderRepositoryImpl(), //TODO Injecter
+    savedStateHandle: SavedStateHandle? = null
 ) : ViewModel() {
     @OptIn(SavedStateHandleSaveableApi::class)
-    private val holidayId = savedStateHandle.get<String>("holidayId") ?: ""
+    private val holidayId = savedStateHandle?.get<String>("holidayId") ?: ""
 
-    // UI State
-    private val uiState: StateFlow<HolidayBagReminderUiState> =
+    val uiState: StateFlow<HolidayBagReminderUiState> =
         holidayRepository.get(holidayId)
             .map { data -> data.toUiState() }
             .onStart { emit(HolidayBagReminderUiState.Loading) }
