@@ -1,11 +1,25 @@
 package m.adrien.kmpholiday.view.holidayBag.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -24,7 +38,7 @@ fun HolidayHeader(
 ) {
     var durationText by remember { mutableStateOf(durationDay.toString()) }
     var isEditing by remember { mutableStateOf(isEditingDefault) }
-    
+
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -38,7 +52,7 @@ fun HolidayHeader(
             color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         if (isEditing) {
             HolidayHeaderEditMode(
                 durationText = durationText,
@@ -48,6 +62,9 @@ fun HolidayHeader(
                 onSave = {
                     val newDuration = durationText.toIntOrNull() ?: durationDay
                     onDurationChange(newDuration)
+                    isEditing = false
+                },
+                onCancel = {
                     isEditing = false
                 }
             )
@@ -65,6 +82,7 @@ fun HolidayHeaderEditMode(
     durationText: String,
     onDurationTextChange: (String) -> Unit,
     onSave: () -> Unit,
+    onCancel: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -79,9 +97,13 @@ fun HolidayHeaderEditMode(
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number
-            )
+            ),
+            modifier = Modifier.weight(2f)
         )
-        Button(onClick = onSave) {
+        Button(onClick = onCancel, modifier = Modifier.weight(1f)) {
+            Text("Cancel")
+        }
+        Button(onClick = onSave, modifier = Modifier.weight(1f)) {
             Text("Save")
         }
     }
@@ -144,8 +166,9 @@ fun HolidayHeaderEditModePreview() {
     MaterialTheme {
         HolidayHeaderEditMode(
             durationText = "14",
-            onDurationTextChange = {  },
-            onSave = { }
+            onDurationTextChange = { },
+            onSave = { },
+            onCancel = { }
         )
     }
 }
