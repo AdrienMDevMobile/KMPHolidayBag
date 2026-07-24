@@ -20,6 +20,7 @@ import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 @Composable
 fun ItemInBag(
     item: ItemInBagUiState,
+    onCheckedChange: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -46,7 +47,7 @@ fun ItemInBag(
 
             Checkbox(
                 checked = item.checked,
-                onCheckedChange = { },
+                onCheckedChange = { checked -> onCheckedChange(checked) },
             )
         }
     }
@@ -57,8 +58,8 @@ fun ItemInBag(
 fun ItemInBagPreview() {
     MaterialTheme {
         Column(modifier = Modifier.background(Color.White)) {
-            ItemInBag(ItemInBagUiState("Name", true, 5))
-            ItemInBag(ItemInBagUiState("Name", false, 10))
+            ItemInBag(ItemInBagUiState("item1", "Name", true, 5))
+            ItemInBag(ItemInBagUiState("item2", "Name", false, 10))
         }
     }
 }

@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import m.adrien.kmpholiday.view.holidayBag.HolidayBagReminderViewModel
 import m.adrien.kmpholiday.view.holidayBag.component.HolidayHeader
 import m.adrien.kmpholiday.view.holidayBag.component.ItemsInBagList
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
@@ -26,11 +25,17 @@ fun HolidayBagReminderScreen(
     viewModel: HolidayBagReminderViewModel = viewModel(factory = HolidayBagReminderViewModel.Factory)
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    HolidayBagReminderPage(uiState)
+    HolidayBagReminderPage(
+        uiState = uiState,
+        onItemCheckedChange = { itemId, checked -> viewModel.toggleItemChecked(itemId, checked) }
+    )
 }
 
 @Composable
-fun HolidayBagReminderPage(uiState: HolidayBagReminderUiState) {
+fun HolidayBagReminderPage(
+    uiState: HolidayBagReminderUiState,
+    onItemCheckedChange: (String, Boolean) -> Unit = { _, _ -> }
+) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -53,7 +58,10 @@ fun HolidayBagReminderPage(uiState: HolidayBagReminderUiState) {
                         onDurationChange = { /* TODO: Handle duration change */ }
                     )
 
-                    ItemsInBagList(items = uiState.items)
+                    ItemsInBagList(
+                        items = uiState.items,
+                        onItemCheckedChange = onItemCheckedChange
+                    )
                 }
             }
 
@@ -74,16 +82,19 @@ fun HolidayBagReminderScreenPreview() {
                 durationDay = 14,
                 items = listOf(
                     ItemInBagUiState(
+                        id = "swimsuit",
                         name = "Swimsuit",
                         checked = true,
                         quantity = 2
                     ),
                     ItemInBagUiState(
+                        id = "sunglasses",
                         name = "Sunglasses",
                         checked = false,
                         quantity = 1
                     ),
                     ItemInBagUiState(
+                        id = "beach_towel",
                         name = "Beach Towel",
                         checked = true,
                         quantity = 3

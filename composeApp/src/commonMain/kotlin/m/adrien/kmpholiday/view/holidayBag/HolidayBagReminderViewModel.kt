@@ -16,14 +16,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import m.adrien.kmpholiday.data.impl.HolidayBagReminderRepositoryImpl
+import java.util.UUID
 import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
 import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
 import m.adrien.kmpholiday.view.holidayBag.value.toUiState
 
 class HolidayBagReminderViewModel(
-    holidayRepository: HolidayBagReminderRepository = HolidayBagReminderRepositoryImpl(), //TODO Injecter
+    val holidayRepository: HolidayBagReminderRepository = HolidayBagReminderRepositoryImpl(), //TODO Injecter
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -67,6 +69,12 @@ class HolidayBagReminderViewModel(
         isEditing = !isEditing
     }
 
+    fun toggleItemChecked(itemId: String, checked: Boolean) {
+        viewModelScope.launch {
+            holidayRepository.check(holidayId, itemId, checked)
+        }
+    }
+
     /*
     fun updateHolidayName(newName: String) {
         _uiState.value = _uiState.value.copy(name = newName)
@@ -88,6 +96,7 @@ class HolidayBagReminderViewModel(
         }
 
         val newItem = ItemInBagUiState(
+            id = UUID.randomUUID().toString(),
             name = itemName,
             checked = false,
             quantity = calculatedQuantity,
@@ -105,17 +114,7 @@ class HolidayBagReminderViewModel(
         updateItems(updatedItems)
     }
 
-    fun toggleItemChecked(itemName: String) {
-        val updatedItems = _uiState.value.items.map { item ->
-            if (item.name == itemName) {
-                item.copy(checked = !item.checked)
-            } else {
-                item
-            }
-        }.sortedBy { it.checked } // Move checked items to bottom
 
-        updateItems(updatedItems)
-    }
 
     private fun updateItemQuantitiesForDuration() {
         val updatedItems = _uiState.value.items.map { item ->

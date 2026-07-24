@@ -13,6 +13,7 @@ fun HolidayBagReminder.toUiState(): HolidayBagReminderUiState {
                 item.quantity
             }
             ItemInBagUiState(
+                id = item.id,
                 name = item.name,
                 checked = item.checked,
                 quantity = quantity,

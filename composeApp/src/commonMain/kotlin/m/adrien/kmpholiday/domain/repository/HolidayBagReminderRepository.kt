@@ -8,7 +8,7 @@ import m.adrien.kmpholiday.domain.HolidayBagReminderId
 
 interface HolidayBagReminderRepository {
     fun get(id: HolidayBagReminderId): Flow<HolidayBagReminder>
-    suspend fun check(itemId: ItemInBagId): Boolean
+    suspend fun check(holidayId: HolidayBagReminderId, itemId: ItemInBagId, checked: Boolean): Boolean
     suspend fun edit(itemId: ItemInBagId, newItem: ItemInBag): Boolean
     suspend fun reset(id: HolidayBagReminderId): Boolean
 }

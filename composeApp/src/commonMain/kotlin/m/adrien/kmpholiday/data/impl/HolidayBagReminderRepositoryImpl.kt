@@ -19,36 +19,36 @@ class HolidayBagReminderRepositoryImpl(
         val staticData = StaticDatas.listOfHolidayBagReminder.find { it.id == id }
 
         if (staticData != null) {
-            val cachedData = holidayReminderInstanceCache.getReminderInstance(id)
-            val duration = cachedData?.duration ?: 0 // Default duration if not cached
-            val checkedItems = cachedData?.itemChecked ?: emptyList()
+            // Combine static data with dynamic cache data
+            holidayReminderInstanceCache.getReminderInstance(id).collect { cachedData ->
+                val duration = cachedData?.duration ?: 0 // Default duration if not cached
+                val checkedItems = cachedData?.itemChecked ?: emptyList()
 
-            val holidayBagReminder = HolidayBagReminder(
-                id = staticData.id,
-                name = staticData.name,
-                duration = duration,
-                items = staticData.items.map { itemData ->
-                    ItemInBag(
-                        name = itemData.name,
-                        id = itemData.id,
-                        checked = itemData.id in checkedItems, // Use cached checked state
-                        quantity = itemData.quantity,
-                        isDurationDependant = itemData.isDayDependant
-                    )
-                }
-            )
+                val holidayBagReminder = HolidayBagReminder(
+                    id = staticData.id,
+                    name = staticData.name,
+                    duration = duration,
+                    items = staticData.items.map { itemData ->
+                        ItemInBag(
+                            name = itemData.name,
+                            id = itemData.id,
+                            checked = itemData.id in checkedItems, // Use cached checked state
+                            quantity = itemData.quantity,
+                            isDurationDependant = itemData.isDayDependant
+                        )
+                    }
+                )
 
-            emit(holidayBagReminder)
+                emit(holidayBagReminder)
+            }
         } else {
             throw IllegalArgumentException("Holiday reminder with id $id not found")
         }
     }
 
-    override suspend fun check(itemId: ItemInBagId): Boolean {
-        // Dans notre architecture mixte, les items sont statiques et ne peuvent pas être modifiés
-        // Cette méthode pourrait être utilisée pour marquer un item comme coché/décoché
-        // Pour l'instant, nous retournons false car nous ne supportons pas cette fonctionnalité
-        return false
+    override suspend fun check(holidayId: HolidayBagReminderId, itemId: ItemInBagId, checked: Boolean): Boolean {
+        holidayReminderInstanceCache.checkItem(holidayId, itemId, checked)
+        return true //TODO
     }
 
     override suspend fun edit(itemId: ItemInBagId, newItem: ItemInBag): Boolean {

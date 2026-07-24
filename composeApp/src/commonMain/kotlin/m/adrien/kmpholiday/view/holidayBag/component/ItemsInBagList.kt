@@ -13,6 +13,7 @@ import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 @Composable
 fun ItemsInBagList(
     items: List<ItemInBagUiState>,
+    onItemCheckedChange: (String, Boolean) -> Unit = { _,_ -> },
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -37,7 +38,10 @@ fun ItemsInBagList(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(items) { item ->
-                        ItemInBag(item = item)
+                        ItemInBag(
+                            item = item,
+                            onCheckedChange = { checked -> onItemCheckedChange(item.id, checked) }
+                        )
                     }
                 }
             }
@@ -54,16 +58,19 @@ fun ItemsInBagListPreview() {
         ItemsInBagList(
             items = listOf(
                 ItemInBagUiState(
+                    id = "swimsuit",
                     name = "Swimsuit",
                     checked = true,
                     quantity = 2
                 ),
                 ItemInBagUiState(
+                    id = "sunglasses",
                     name = "Sunglasses",
                     checked = false,
                     quantity = 1
                 ),
                 ItemInBagUiState(
+                    id = "beach_towel",
                     name = "Beach Towel",
                     checked = true,
                     quantity = 3
