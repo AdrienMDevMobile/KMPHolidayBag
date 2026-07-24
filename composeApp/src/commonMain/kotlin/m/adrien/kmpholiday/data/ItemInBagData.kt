@@ -1,6 +1,6 @@
 package m.adrien.kmpholiday.data
 
-data class HolidayItemData(
+data class ItemInBagData(
     val name: String,
     val id: String,
     val quantity: Int,

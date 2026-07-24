@@ -6,18 +6,18 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import m.adrien.kmpholiday.domain.repository.HolidayReminderPreviewsRepository
+import m.adrien.kmpholiday.domain.repository.HolidayBagReminderPreviewsRepository
 
 class HolidaysViewModel(
-    repository: HolidayReminderPreviewsRepository
+    repository: HolidayBagReminderPreviewsRepository
 ) : ViewModel() {
-    val uiState: StateFlow<HolidayRemindersUiState> = repository.get().map { list ->
-        HolidayRemindersUiState.Success(
+    val uiState: StateFlow<HolidayBagRemindersUiState> = repository.get().map { list ->
+        HolidayBagRemindersUiState.Success(
             list.map { it.toUi() }
         )
     }.stateIn(
             scope = viewModelScope, started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = HolidayRemindersUiState.Loading
+            initialValue = HolidayBagRemindersUiState.Loading
         )
 
 }

@@ -2,14 +2,14 @@ package m.adrien.kmpholiday.view.holidays
 
 import m.adrien.kmpholiday.domain.HolidayBagReminderPreview
 
-fun HolidayBagReminderPreview.toUi(): HolidayReminderPreviewUiState {
-    return HolidayReminderPreviewUiState(
+fun HolidayBagReminderPreview.toUi(): HolidayBagReminderPreviewUiState {
+    return HolidayBagReminderPreviewUiState(
         name = this.name,
         id = this.id
     )
 }
 
-fun HolidayReminderPreviewUiState.toDomain(): HolidayBagReminderPreview {
+fun HolidayBagReminderPreviewUiState.toDomain(): HolidayBagReminderPreview {
     return HolidayBagReminderPreview(
         name = this.name,
         id = this.id

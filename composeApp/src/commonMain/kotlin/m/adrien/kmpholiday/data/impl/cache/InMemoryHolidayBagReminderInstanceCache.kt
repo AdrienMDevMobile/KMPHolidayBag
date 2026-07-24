@@ -1,7 +1,7 @@
 package m.adrien.kmpholiday.data.impl.cache
 
 //TODO PlaceHolder, version others than Android don't use real cache
-class InMemoryHolidayReminderInstanceCache : HolidayReminderInstanceCache {
+class InMemoryHolidayBagReminderInstanceCache : HolidayBagReminderInstanceCache {
     private val durationMap = mutableMapOf<String, Int>()
     
     override fun getReminderInstance(holidayId: String): Int? {

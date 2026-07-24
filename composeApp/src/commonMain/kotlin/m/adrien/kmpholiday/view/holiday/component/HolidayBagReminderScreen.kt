@@ -6,22 +6,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import m.adrien.kmpholiday.view.holiday.value.HolidayItemUiState
-import m.adrien.kmpholiday.view.holiday.value.HolidayReminderUiState
+import m.adrien.kmpholiday.view.holiday.value.ItemInBagUiState
+import m.adrien.kmpholiday.view.holiday.value.HolidayBagReminderUiState
 import m.adrien.kmpholiday.view.shared.ErrorPage
 import m.adrien.kmpholiday.view.shared.LoadingPage
 
 @Composable
-fun HolidayReminderScreen(uiState: HolidayReminderUiState) {
+fun HolidayBagReminderScreen(uiState: HolidayBagReminderUiState) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         when (uiState) {
-            HolidayReminderUiState.Loading -> {
+            HolidayBagReminderUiState.Loading -> {
                 LoadingPage()
             }
-            is HolidayReminderUiState.Value -> {
+            is HolidayBagReminderUiState.Value -> {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -34,10 +34,10 @@ fun HolidayReminderScreen(uiState: HolidayReminderUiState) {
                         onDurationChange = { /* TODO: Handle duration change */ }
                     )
 
-                    HolidayItemsList(items = uiState.items)
+                    ItemsInBagList(items = uiState.items)
                 }
             }
-            is HolidayReminderUiState.Error -> {
+            is HolidayBagReminderUiState.Error -> {
                 ErrorPage(errorMessage = uiState.message)
             }
         }
@@ -46,24 +46,24 @@ fun HolidayReminderScreen(uiState: HolidayReminderUiState) {
 
 @Preview(showBackground = true)
 @Composable
-fun HolidayReminderScreenPreview() {
+fun HolidayBagReminderScreenPreview() {
     MaterialTheme {
-        HolidayReminderScreen(
-            uiState = HolidayReminderUiState.Value(
+        HolidayBagReminderScreen(
+            uiState = HolidayBagReminderUiState.Value(
                 name = "Summer Vacation",
                 durationDay = 14,
                 items = listOf(
-                    HolidayItemUiState(
+                    ItemInBagUiState(
                         name = "Swimsuit",
                         checked = true,
                         quantity = 2
                     ),
-                    HolidayItemUiState(
+                    ItemInBagUiState(
                         name = "Sunglasses",
                         checked = false,
                         quantity = 1
                     ),
-                    HolidayItemUiState(
+                    ItemInBagUiState(
                         name = "Beach Towel",
                         checked = true,
                         quantity = 3
@@ -76,10 +76,10 @@ fun HolidayReminderScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HolidayReminderScreenEmptyPreview() {
+fun HolidayBagReminderScreenEmptyPreview() {
     MaterialTheme {
-        HolidayReminderScreen(
-            uiState = HolidayReminderUiState.Value(
+        HolidayBagReminderScreen(
+            uiState = HolidayBagReminderUiState.Value(
                 name = "Winter Getaway",
                 durationDay = 7,
                 items = emptyList()
@@ -90,20 +90,20 @@ fun HolidayReminderScreenEmptyPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HolidayReminderScreenLoadingPreview() {
+fun HolidayBagReminderScreenLoadingPreview() {
     MaterialTheme {
-        HolidayReminderScreen(
-            uiState = HolidayReminderUiState.Loading
+        HolidayBagReminderScreen(
+            uiState = HolidayBagReminderUiState.Loading
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HolidayReminderScreenErrorPreview() {
+fun HolidayBagReminderScreenErrorPreview() {
     MaterialTheme {
-        HolidayReminderScreen(
-            uiState = HolidayReminderUiState.Error("Failed to load holiday data")
+        HolidayBagReminderScreen(
+            uiState = HolidayBagReminderUiState.Error("Failed to load holiday data")
         )
     }
 }

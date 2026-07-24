@@ -1,19 +1,19 @@
 package m.adrien.kmpholiday.data
 
 internal object StaticDatas {
-    val listOfHolidayReminder = listOf(
-        HolidayReminderData(
+    val listOfHolidayBagReminder = listOf(
+        HolidayBagReminderData(
             name = "Plage",
             id = "1",
             duration = 7,
             items = listOf(
-                HolidayItemData(
+                ItemInBagData(
                     name = "Crême solaire",
                     id = "11",
                     isDayDependant = false,
                     quantity = 1,
                 ),
-                HolidayItemData(
+                ItemInBagData(
                     name = "T shirt",
                     id = "12",
                     isDayDependant = true,
@@ -21,12 +21,12 @@ internal object StaticDatas {
                 )
             )
         ),
-        HolidayReminderData(
+        HolidayBagReminderData(
             name = "Week end Danse",
             id = "2",
             duration = 2,
             items = listOf(
-                HolidayItemData(
+                ItemInBagData(
                     name = "T shirt",
                     id = "21",
                     isDayDependant = true,
@@ -34,18 +34,18 @@ internal object StaticDatas {
                 )
             )
         ),
-        HolidayReminderData(
+        HolidayBagReminderData(
             name = "Ski",
             id = "3",
             duration = 7,
             items = listOf(
-                HolidayItemData(
+                ItemInBagData(
                     name = "T shirt",
                     id = "31",
                     isDayDependant = true,
                     quantity = 2,
                 ),
-                HolidayItemData(
+                ItemInBagData(
                     name = "Lunettes de soleil",
                     id = "32",
                     isDayDependant = true,

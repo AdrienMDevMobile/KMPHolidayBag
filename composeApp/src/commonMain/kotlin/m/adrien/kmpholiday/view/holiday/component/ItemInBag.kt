@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import m.adrien.kmpholiday.view.holiday.value.HolidayItemUiState
+import m.adrien.kmpholiday.view.holiday.value.ItemInBagUiState
 
 @Composable
-fun HolidayItem(
-    item: HolidayItemUiState,
+fun ItemInBag(
+    item: ItemInBagUiState,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -54,11 +54,11 @@ fun HolidayItem(
 
 @Preview
 @Composable
-fun HolidayItemPreview() {
+fun ItemInBagPreview() {
     MaterialTheme {
         Column(modifier = Modifier.background(Color.White)) {
-            HolidayItem(HolidayItemUiState("Name", true, 5))
-            HolidayItem(HolidayItemUiState("Name", false, 10))
+            ItemInBag(ItemInBagUiState("Name", true, 5))
+            ItemInBag(ItemInBagUiState("Name", false, 10))
         }
     }
 }

@@ -9,13 +9,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HolidayRemindersList(
-    list: List<HolidayReminderPreviewUiState>,
+fun HolidayBagRemindersList(
+    list: List<HolidayBagReminderPreviewUiState>,
     goToHoliday: (String) -> Unit,
 ) {
     list.forEach { holiday ->
-        HolidayReminderButton(
-            uiState = HolidayReminderPreviewUiState(
+        HolidayBagReminderButton(
+            uiState = HolidayBagReminderPreviewUiState(
                 name = holiday.name,
                 id = holiday.id
             ),
@@ -28,14 +28,14 @@ fun HolidayRemindersList(
 
 @Preview
 @Composable
-fun HolidayRemindersList() {
+fun HolidayBagRemindersList() {
     Column {
         val sampleReminders = listOf(
-            HolidayReminderPreviewUiState("Summer Vacation", "summer_2024"),
-            HolidayReminderPreviewUiState("Winter Break", "winter_2024"),
-            HolidayReminderPreviewUiState("Spring Trip", "spring_2025")
+            HolidayBagReminderPreviewUiState("Summer Vacation", "summer_2024"),
+            HolidayBagReminderPreviewUiState("Winter Break", "winter_2024"),
+            HolidayBagReminderPreviewUiState("Spring Trip", "spring_2025")
         )
-        HolidayRemindersList(
+        HolidayBagRemindersList(
             sampleReminders, {}
         )
     }

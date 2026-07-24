@@ -1,9 +1,9 @@
 package m.adrien.kmpholiday.data.converter
 
-import m.adrien.kmpholiday.data.HolidayItemData
+import m.adrien.kmpholiday.data.ItemInBagData
 import m.adrien.kmpholiday.domain.ItemInBag
 
-fun HolidayItemData.toDomain(): ItemInBag {
+fun ItemInBagData.toDomain(): ItemInBag {
     return ItemInBag(
         name = this.name,
         id = this.id,
@@ -13,8 +13,8 @@ fun HolidayItemData.toDomain(): ItemInBag {
     )
 }
 
-fun ItemInBag.toData(): HolidayItemData {
-    return HolidayItemData(
+fun ItemInBag.toData(): ItemInBagData {
+    return ItemInBagData(
         name = this.name,
         id = this.id,
         quantity = this.quantity,

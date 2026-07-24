@@ -2,8 +2,8 @@ package m.adrien.kmpholiday.view.holiday.value
 
 import m.adrien.kmpholiday.domain.HolidayBagReminder
 
-fun HolidayBagReminder.toUiState(): HolidayReminderUiState {
-    return HolidayReminderUiState.Value(
+fun HolidayBagReminder.toUiState(): HolidayBagReminderUiState {
+    return HolidayBagReminderUiState.Value(
         name = this.name,
         durationDay = this.duration,
         items = this.items.map { item ->
@@ -12,7 +12,7 @@ fun HolidayBagReminder.toUiState(): HolidayReminderUiState {
             } else {
                 item.quantity
             }
-            HolidayItemUiState(
+            ItemInBagUiState(
                 name = item.name,
                 checked = item.checked,
                 quantity = quantity,

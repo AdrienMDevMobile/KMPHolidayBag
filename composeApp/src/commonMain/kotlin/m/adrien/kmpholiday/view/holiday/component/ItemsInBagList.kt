@@ -8,11 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import m.adrien.kmpholiday.view.holiday.value.HolidayItemUiState
+import m.adrien.kmpholiday.view.holiday.value.ItemInBagUiState
 
 @Composable
-fun HolidayItemsList(
-    items: List<HolidayItemUiState>,
+fun ItemsInBagList(
+    items: List<ItemInBagUiState>,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -37,7 +37,7 @@ fun HolidayItemsList(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(items) { item ->
-                        HolidayItem(item = item)
+                        ItemInBag(item = item)
                     }
                 }
             }
@@ -49,21 +49,21 @@ fun HolidayItemsList(
 
 @Preview(showBackground = true)
 @Composable
-fun HolidayItemsListPreview() {
+fun ItemsInBagListPreview() {
     MaterialTheme {
-        HolidayItemsList(
+        ItemsInBagList(
             items = listOf(
-                HolidayItemUiState(
+                ItemInBagUiState(
                     name = "Swimsuit",
                     checked = true,
                     quantity = 2
                 ),
-                HolidayItemUiState(
+                ItemInBagUiState(
                     name = "Sunglasses",
                     checked = false,
                     quantity = 1
                 ),
-                HolidayItemUiState(
+                ItemInBagUiState(
                     name = "Beach Towel",
                     checked = true,
                     quantity = 3
@@ -75,9 +75,9 @@ fun HolidayItemsListPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HolidayItemsListEmptyPreview() {
+fun ItemsInBagListEmptyPreview() {
     MaterialTheme {
-        HolidayItemsList(
+        ItemsInBagList(
             items = emptyList()
         )
     }

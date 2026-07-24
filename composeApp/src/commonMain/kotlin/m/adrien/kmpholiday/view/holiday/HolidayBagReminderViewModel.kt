@@ -13,28 +13,28 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
-import m.adrien.kmpholiday.domain.repository.HolidayReminderRepository
-import m.adrien.kmpholiday.view.holiday.value.HolidayItemUiState
-import m.adrien.kmpholiday.view.holiday.value.HolidayReminderUiState
+import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
+import m.adrien.kmpholiday.view.holiday.value.ItemInBagUiState
+import m.adrien.kmpholiday.view.holiday.value.HolidayBagReminderUiState
 import m.adrien.kmpholiday.view.holiday.value.toUiState
 
-class HolidayReminderViewModel(
-    holidayRepository: HolidayReminderRepository,
+class HolidayBagReminderViewModel(
+    holidayRepository: HolidayBagReminderRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     @OptIn(SavedStateHandleSaveableApi::class)
     private val holidayId = savedStateHandle.get<String>("holidayId") ?: ""
 
     // UI State
-    private val uiState: StateFlow<HolidayReminderUiState> =
+    private val uiState: StateFlow<HolidayBagReminderUiState> =
         holidayRepository.get(holidayId)
             .map { data -> data.toUiState() }
-            .onStart { emit(HolidayReminderUiState.Loading) }
-            .catch { emit(HolidayReminderUiState.Error(it.message ?: "Unknown error")) }
+            .onStart { emit(HolidayBagReminderUiState.Loading) }
+            .catch { emit(HolidayBagReminderUiState.Error(it.message ?: "Unknown error")) }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = HolidayReminderUiState.Loading
+                initialValue = HolidayBagReminderUiState.Loading
             )
 
     // Editing state
@@ -65,7 +65,7 @@ class HolidayReminderViewModel(
             baseQuantity
         }
 
-        val newItem = HolidayItemUiState(
+        val newItem = ItemInBagUiState(
             name = itemName,
             checked = false,
             quantity = calculatedQuantity,
@@ -110,7 +110,7 @@ class HolidayReminderViewModel(
         updateItems(updatedItems)
     }
 */
-    private fun updateItems(updatedItems: List<HolidayItemUiState>) {
+    private fun updateItems(updatedItems: List<ItemInBagUiState>) {
         /*
         _uiState.value = _uiState.value.copy(items = updatedItems)
         holidayRepository.saveHolidayData(_uiState.value.toDomainModel())

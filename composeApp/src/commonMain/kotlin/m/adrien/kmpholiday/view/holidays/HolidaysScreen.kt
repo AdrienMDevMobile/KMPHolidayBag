@@ -29,7 +29,7 @@ fun HolidaysScreen(
 
 @Composable
 fun HolidaysPage(
-    uiState: HolidayRemindersUiState,
+    uiState: HolidayBagRemindersUiState,
     goToHoliday: (String) -> Unit,
 ) {
     Column(
@@ -40,16 +40,16 @@ fun HolidaysPage(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (uiState) {
-            is HolidayRemindersUiState.Loading -> {
+            is HolidayBagRemindersUiState.Loading -> {
                 LoadingPage()
             }
 
-            is HolidayRemindersUiState.Error -> {
+            is HolidayBagRemindersUiState.Error -> {
                 ErrorPage("Error: ${uiState.message}")
             }
 
-            is HolidayRemindersUiState.Success -> {
-                HolidayRemindersList(uiState.reminders, goToHoliday)
+            is HolidayBagRemindersUiState.Success -> {
+                HolidayBagRemindersList(uiState.reminders, goToHoliday)
             }
         }
     }
@@ -59,12 +59,12 @@ fun HolidaysPage(
 @Composable
 fun HolidaysPageSuccessPreview() {
     val sampleReminders = listOf(
-        HolidayReminderPreviewUiState("Summer Vacation", "summer_2024"),
-        HolidayReminderPreviewUiState("Winter Break", "winter_2024"),
-        HolidayReminderPreviewUiState("Spring Trip", "spring_2025")
+        HolidayBagReminderPreviewUiState("Summer Vacation", "summer_2024"),
+        HolidayBagReminderPreviewUiState("Winter Break", "winter_2024"),
+        HolidayBagReminderPreviewUiState("Spring Trip", "spring_2025")
     )
     HolidaysPage(
-        uiState = HolidayRemindersUiState.Success(sampleReminders),
+        uiState = HolidayBagRemindersUiState.Success(sampleReminders),
         {}
     )
 }
@@ -73,7 +73,7 @@ fun HolidaysPageSuccessPreview() {
 @Composable
 fun HolidaysPageLoadingPreview() {
     HolidaysPage(
-        uiState = HolidayRemindersUiState.Loading, {}
+        uiState = HolidayBagRemindersUiState.Loading, {}
     )
 }
 
@@ -81,7 +81,7 @@ fun HolidaysPageLoadingPreview() {
 @Composable
 fun HolidaysPageErrorPreview() {
     HolidaysPage(
-        uiState = HolidayRemindersUiState.Error("Failed to load holidays"),
+        uiState = HolidayBagRemindersUiState.Error("Failed to load holidays"),
         {}
     )
 }

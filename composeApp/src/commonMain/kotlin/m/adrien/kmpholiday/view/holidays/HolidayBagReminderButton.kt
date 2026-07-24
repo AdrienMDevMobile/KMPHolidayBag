@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HolidayReminderButton(
-    uiState: HolidayReminderPreviewUiState,
+fun HolidayBagReminderButton(
+    uiState: HolidayBagReminderPreviewUiState,
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -57,11 +57,11 @@ fun HolidayReminderButton(
 
 @Composable
 @Preview
-fun HolidayReminderButtonPreview() {
+fun HolidayBagReminderButtonPreview() {
     MaterialTheme {
         Box(Modifier.background(MaterialTheme.colorScheme.primaryContainer)) {
-            HolidayReminderButton(
-                uiState = HolidayReminderPreviewUiState(
+            HolidayBagReminderButton(
+                uiState = HolidayBagReminderPreviewUiState(
                     name = "Vacances d'été",
                     id = "summer_2024"
                 ),

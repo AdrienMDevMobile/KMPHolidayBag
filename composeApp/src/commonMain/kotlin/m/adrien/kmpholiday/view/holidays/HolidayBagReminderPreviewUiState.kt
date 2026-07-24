@@ -1,6 +1,6 @@
 package m.adrien.kmpholiday.view.holidays
 
-data class HolidayReminderPreviewUiState(
+data class HolidayBagReminderPreviewUiState(
     val name: String,
     val id: String,
 )

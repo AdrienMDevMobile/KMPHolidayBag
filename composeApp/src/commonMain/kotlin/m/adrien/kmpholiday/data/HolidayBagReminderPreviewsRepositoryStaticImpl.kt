@@ -4,13 +4,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import m.adrien.kmpholiday.data.converter.toPreview
 import m.adrien.kmpholiday.domain.HolidayBagReminder
-import m.adrien.kmpholiday.domain.HolidayReminderPreviews
-import m.adrien.kmpholiday.domain.repository.HolidayReminderPreviewsRepository
+import m.adrien.kmpholiday.domain.HolidayBagReminderPreviews
+import m.adrien.kmpholiday.domain.repository.HolidayBagReminderPreviewsRepository
 
-class HolidayReminderPreviewsRepositoryStaticImpl : HolidayReminderPreviewsRepository {
-    override fun get(): Flow<HolidayReminderPreviews> = flow {
+class HolidayBagReminderPreviewsRepositoryStaticImpl : HolidayBagReminderPreviewsRepository {
+    override fun get(): Flow<HolidayBagReminderPreviews> = flow {
         emit(
-            StaticDatas.listOfHolidayReminder
+            StaticDatas.listOfHolidayBagReminder
                 .map { it.toPreview() }
         )
     }
