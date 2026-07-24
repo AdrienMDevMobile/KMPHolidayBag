@@ -2,6 +2,7 @@ package m.adrien.kmpholiday.data.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import m.adrien.kmpholiday.data.HolidayReminderInstanceData
 import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderCacheFactory
 import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderInfosInstanceCache
 import m.adrien.kmpholiday.domain.ItemInBag
@@ -18,17 +19,19 @@ class HolidayBagReminderRepositoryImpl(
         val staticData = StaticDatas.listOfHolidayBagReminder.find { it.id == id }
 
         if (staticData != null) {
-            val cachedDuration = holidayReminderInstanceCache.getReminderInstance(id) ?: staticData.duration
+            val cachedData = holidayReminderInstanceCache.getReminderInstance(id)
+            val duration = cachedData?.duration ?: 0 // Default duration if not cached
+            val checkedItems = cachedData?.itemChecked ?: emptyList()
 
             val holidayBagReminder = HolidayBagReminder(
                 id = staticData.id,
                 name = staticData.name,
-                duration = cachedDuration,
+                duration = duration,
                 items = staticData.items.map { itemData ->
                     ItemInBag(
                         name = itemData.name,
                         id = itemData.id,
-                        checked = false, // Valeur par défaut //TODO : cette valeur doit etre en cache
+                        checked = itemData.id in checkedItems, // Use cached checked state
                         quantity = itemData.quantity,
                         isDurationDependant = itemData.isDayDependant
                     )
@@ -56,9 +59,16 @@ class HolidayBagReminderRepositoryImpl(
     }
 
     override suspend fun reset(id: HolidayBagReminderId): Boolean {
-        // Réinitialiser signifie supprimer la durée personnalisée du cache
-        // et revenir à la durée par défaut des données statiques
-        holidayReminderInstanceCache.saveReminderInstance(id, StaticDatas.listOfHolidayBagReminder.find { it.id == id }?.duration ?: 0)
+        // Réinitialiser signifie supprimer les données personnalisées du cache
+        // et revenir aux valeurs par défaut
+        holidayReminderInstanceCache.saveReminderInstance(
+            id, 
+            HolidayReminderInstanceData(
+                id = id,
+                duration = 0, // Default duration
+                itemChecked = emptyList() // No items checked by default
+            )
+        )
         return true
     }
 }
