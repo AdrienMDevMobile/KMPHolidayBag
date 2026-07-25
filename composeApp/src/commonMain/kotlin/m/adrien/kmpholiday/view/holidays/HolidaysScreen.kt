@@ -13,14 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.compose.viewmodel.koinViewModel
 import m.adrien.kmpholiday.view.shared.ErrorPage
 import m.adrien.kmpholiday.view.shared.LoadingPage
 
 @Composable
 fun HolidaysScreen(
     goToHoliday: (String) -> Unit,
-    viewModel: HolidaysViewModel = viewModel()
+    viewModel: HolidaysViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
 

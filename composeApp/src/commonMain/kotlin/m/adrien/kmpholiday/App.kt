@@ -7,10 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
-import m.adrien.kmpholiday.data.impl.HolidayBagReminderPreviewsRepositoryStaticImpl
 import m.adrien.kmpholiday.view.holidayBag.HolidayBagReminderScreen
 import m.adrien.kmpholiday.view.holidays.HolidaysScreen
 import m.adrien.kmpholiday.view.holidays.HolidaysViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 @Preview
@@ -23,19 +23,16 @@ fun App() {
             startDestination = Holidays
         ) {
             composable<Holidays> {
+                val viewModel: HolidaysViewModel = koinViewModel()
                 HolidaysScreen(
                     goToHoliday = { id -> navController.navigate(Holiday(id)) },
-                    viewModel = HolidaysViewModel(HolidayBagReminderPreviewsRepositoryStaticImpl())
+                    viewModel = viewModel
                 )
             }
             composable<Holiday> {
-
                 HolidayBagReminderScreen()
             }
-
-
         }
-
     }
 }
 

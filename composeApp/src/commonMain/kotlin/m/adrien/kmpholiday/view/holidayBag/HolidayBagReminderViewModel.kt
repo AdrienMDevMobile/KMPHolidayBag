@@ -5,11 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.createSavedStateHandle
-import androidx.lifecycle.viewmodel.CreationExtras
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -17,35 +15,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import m.adrien.kmpholiday.data.impl.HolidayBagReminderRepositoryImpl
 import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
 import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
 import m.adrien.kmpholiday.view.holidayBag.value.toUiState
-
 class HolidayBagReminderViewModel(
-    val holidayRepository: HolidayBagReminderRepository = HolidayBagReminderRepositoryImpl(), //TODO Injecter
+    val holidayRepository: HolidayBagReminderRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    companion object {
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                // Get the SavedStateHandle from extras
-                val savedStateHandle = extras.createSavedStateHandle()
-                
-                // Create and return the ViewModel
-                return HolidayBagReminderViewModel(
-                    holidayRepository = HolidayBagReminderRepositoryImpl(),
-                    savedStateHandle = savedStateHandle
-                ) as T
-            }
-        }
-    }
     @OptIn(SavedStateHandleSaveableApi::class)
     private val holidayId = savedStateHandle.get<String>("holidayId") ?: ""
 

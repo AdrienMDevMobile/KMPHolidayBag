@@ -7,11 +7,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderCacheFactory
+import m.adrien.kmpholiday.di.initKoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        // Initialize Koin
+        initKoin()
 
         // Initialize the cache factory with application context
         HolidayBagReminderCacheFactory.init(applicationContext)
