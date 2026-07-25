@@ -84,4 +84,12 @@ class DataStoreHolidayBagReminderInfosInstanceCache(private val context: Context
             preferences[key] = updatedJson
         }
     }
+
+    override suspend fun resetHoliday(holidayId: String) {
+        val key = stringPreferencesKey("$REMINDER_PREFIX$holidayId")
+        // Delete all data for this holiday by removing the preference key
+        context.dataStore.edit { preferences ->
+            preferences.remove(key)
+        }
+    }
 }

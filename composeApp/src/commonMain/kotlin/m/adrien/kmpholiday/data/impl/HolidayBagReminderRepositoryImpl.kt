@@ -64,12 +64,7 @@ class HolidayBagReminderRepositoryImpl(
     }
 
     override suspend fun reset(id: HolidayBagReminderId): Boolean {
-        // Réinitialiser signifie supprimer les données personnalisées du cache
-        // et revenir aux valeurs par défaut
-        holidayReminderInstanceCache.setReminderInstanceDuration(
-            id, 
-            0 // Default duration
-        )
+        holidayReminderInstanceCache.resetHoliday(id)
         return true
     }
 }

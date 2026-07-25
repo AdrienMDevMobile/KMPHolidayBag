@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -35,6 +36,7 @@ fun HolidayHeader(
     isEditing: Boolean,
     onEditModeToggle: () -> Unit,
     onDurationChange: (Int) -> Unit,
+    onReinitialize: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var durationText by remember { mutableStateOf(durationDay.toString()) }
@@ -71,7 +73,8 @@ fun HolidayHeader(
         } else {
             HolidayHeaderDisplayMode(
                 durationDay = durationDay,
-                onEditClick = { onEditModeToggle() }
+                onEditClick = { onEditModeToggle() },
+                onReinitialize = { onReinitialize() }
             )
         }
     }
@@ -113,6 +116,7 @@ fun HolidayHeaderEditMode(
 fun HolidayHeaderDisplayMode(
     durationDay: Int,
     onEditClick: () -> Unit,
+    onReinitialize: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -131,6 +135,12 @@ fun HolidayHeaderDisplayMode(
                 contentDescription = "Edit duration"
             )
         }
+        IconButton(onClick = onReinitialize) {
+            Icon(
+                imageVector = Icons.Filled.Replay,
+                contentDescription = "Reinitialize holiday"
+            )
+        }
     }
 }
 
@@ -143,7 +153,8 @@ fun HolidayHeaderPreview() {
             durationDay = 14,
             isEditing = false,
             onEditModeToggle = { },
-            onDurationChange = { }
+            onDurationChange = { },
+            onReinitialize = { }
         )
     }
 }
@@ -157,7 +168,8 @@ fun HolidayHeaderPreviewEditing() {
             durationDay = 14,
             isEditing = true,
             onEditModeToggle = { },
-            onDurationChange = { }
+            onDurationChange = { },
+            onReinitialize = { }
         )
     }
 }
@@ -181,7 +193,8 @@ fun HolidayHeaderDisplayModePreview() {
     MaterialTheme {
         HolidayHeaderDisplayMode(
             durationDay = 14,
-            onEditClick = { }
+            onEditClick = { },
+            onReinitialize = { }
         )
     }
 }
