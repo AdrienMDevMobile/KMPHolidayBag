@@ -1,8 +1,5 @@
 package m.adrien.kmpholiday.view.holidayBag
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,7 +25,7 @@ class HolidayBagReminderViewModel(
     @OptIn(SavedStateHandleSaveableApi::class)
     private val holidayId = savedStateHandle.get<String>("holidayId") ?: ""
 
-    private var isEditing by mutableStateOf(false)
+    private var isEditingOn = false
 
     val initializeBagDialogUiState: StateFlow<InitializeBagDialogUiState?>
         get() = _initializeBagDialogUiState
@@ -40,7 +37,7 @@ class HolidayBagReminderViewModel(
             .map { data ->
                 val baseUiState = data.toUiState()
                 if (baseUiState is HolidayBagReminderUiState.Value) {
-                    baseUiState.copy(isEditing = isEditing)
+                    baseUiState.copy(isEditingOn = isEditingOn)
                 } else {
                     baseUiState
                 }
@@ -54,7 +51,7 @@ class HolidayBagReminderViewModel(
             )
 
     fun toggleEditMode() {
-        isEditing = !isEditing
+        isEditingOn = !isEditingOn
     }
 
     fun toggleItemChecked(itemId: String, checked: Boolean) {
@@ -72,10 +69,11 @@ class HolidayBagReminderViewModel(
     fun reinitializeHolidayWithDuration() {
         viewModelScope.launch {
             val currentState = _initializeBagDialogUiState.value ?: return@launch
-            val durationString = currentState.duration.ifBlank { currentState.durationDefault.toString() }
+            val durationString =
+                currentState.duration.ifBlank { currentState.durationDefault.toString() }
             val error = getDurationGetErrorCode(durationString)
-            if(error == null){
-                
+            if (error == null) {
+
                 holidayRepository.resetWithNewDuration(
                     holidayId,
                     durationString.toInt()
@@ -102,7 +100,7 @@ class HolidayBagReminderViewModel(
     }
 
     fun updateInitializeDialogDuration(duration: String) {
-        if(duration.isBlank()) {
+        if (duration.isBlank()) {
             //No error if blank : take previous iteration's duration as default value
             return
         }
