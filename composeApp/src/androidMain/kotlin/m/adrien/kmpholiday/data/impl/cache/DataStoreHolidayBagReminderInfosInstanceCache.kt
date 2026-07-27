@@ -9,7 +9,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import m.adrien.kmpholiday.data.HolidayReminderInstanceData
 
@@ -85,11 +84,22 @@ class DataStoreHolidayBagReminderInfosInstanceCache(private val context: Context
         }
     }
 
-    override suspend fun resetHoliday(holidayId: String) {
+    override suspend fun emptyHolidayBagWithNewDuration(holidayId: String, duration: Int) {
         val key = stringPreferencesKey("$REMINDER_PREFIX$holidayId")
-        // Delete all data for this holiday by removing the preference key
+        val currentData = context.dataStore.data.first()
+        val currentJson = currentData[key]
+        
+        val currentReminder = currentJson?.let { json.decodeFromString<HolidayReminderInstanceData>(it) }
+            ?: HolidayReminderInstanceData(holidayId, 0, emptyList())
+        
+        val updatedReminder = currentReminder.copy(
+            duration = duration,
+            itemChecked = emptyList()
+        )
+        val updatedJson = json.encodeToString(updatedReminder)
+        
         context.dataStore.edit { preferences ->
-            preferences.remove(key)
+            preferences[key] = updatedJson
         }
     }
 }

@@ -7,7 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
-import androidx.lifecycle.createSavedStateHandle
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -16,9 +16,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
-import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
+import m.adrien.kmpholiday.view.holidayBag.value.InitializeBagDialogUiState
+import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 import m.adrien.kmpholiday.view.holidayBag.value.toUiState
+
 class HolidayBagReminderViewModel(
     val holidayRepository: HolidayBagReminderRepository,
     savedStateHandle: SavedStateHandle
@@ -26,12 +28,16 @@ class HolidayBagReminderViewModel(
     @OptIn(SavedStateHandleSaveableApi::class)
     private val holidayId = savedStateHandle.get<String>("holidayId") ?: ""
 
-    // Editing state
     private var isEditing by mutableStateOf(false)
+
+    val initializeBagDialogUiState: StateFlow<InitializeBagDialogUiState?>
+        get() = _initializeBagDialogUiState
+    private val _initializeBagDialogUiState: MutableStateFlow<InitializeBagDialogUiState?> =
+        MutableStateFlow(null)
 
     val uiState: StateFlow<HolidayBagReminderUiState> =
         holidayRepository.get(holidayId)
-            .map { data -> 
+            .map { data ->
                 val baseUiState = data.toUiState()
                 if (baseUiState is HolidayBagReminderUiState.Value) {
                     baseUiState.copy(isEditing = isEditing)
@@ -63,10 +69,60 @@ class HolidayBagReminderViewModel(
         }
     }
 
-    fun reinitializeHoliday() {
+    fun reinitializeHolidayWithDuration() {
         viewModelScope.launch {
-            holidayRepository.reset(holidayId)
+            val currentState = _initializeBagDialogUiState.value ?: return@launch
+            val durationString = currentState.duration.ifBlank { currentState.durationDefault.toString() }
+            val error = getDurationGetErrorCode(durationString)
+            if(error == null){
+                
+                holidayRepository.resetWithNewDuration(
+                    holidayId,
+                    durationString.toInt()
+                )
+                _initializeBagDialogUiState.value = null
+            } else {
+                _initializeBagDialogUiState.value = currentState?.copy(
+                    error = error
+                )
+            }
         }
+    }
+
+    private fun getDurationGetErrorCode(duration: String): String? {
+        val durationInt = duration.toIntOrNull()
+
+        return if (durationInt == null) {
+            "Please enter a valid number"
+        } else if (durationInt < 0) {
+            "Duration cannot be negative"
+        } else {
+            null
+        }
+    }
+
+    fun updateInitializeDialogDuration(duration: String) {
+        if(duration.isBlank()) {
+            //No error if blank : take previous iteration's duration as default value
+            return
+        }
+
+        val error = getDurationGetErrorCode(duration)
+
+        _initializeBagDialogUiState.value = _initializeBagDialogUiState.value?.copy(
+            duration = duration,
+            error = error
+        )
+    }
+
+    fun showInitializeDialog(currentDuration: Int) {
+        _initializeBagDialogUiState.value = InitializeBagDialogUiState(
+            durationDefault = currentDuration,
+        )
+    }
+
+    fun hideInitializeDialog() {
+        _initializeBagDialogUiState.value = null
     }
 
     /*

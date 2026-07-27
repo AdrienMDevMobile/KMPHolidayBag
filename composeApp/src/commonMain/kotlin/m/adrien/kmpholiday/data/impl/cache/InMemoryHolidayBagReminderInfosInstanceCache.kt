@@ -55,8 +55,13 @@ class InMemoryHolidayBagReminderInfosInstanceCache : HolidayBagReminderInfosInst
         currentFlow.update { updatedData }
     }
 
-    override suspend fun resetHoliday(holidayId: String) {
-        // Delete all data for this holiday by removing it from the map
-        reminderDataMap.remove(holidayId)
+    override suspend fun emptyHolidayBagWithNewDuration(holidayId: String, duration: Int) {
+        // Set new duration for the holiday
+        val currentFlow = reminderDataMap.getOrPut(holidayId) {
+            MutableStateFlow(null)
+        }
+        val currentData = currentFlow.value ?: HolidayReminderInstanceData(holidayId, 0, emptyList())
+        val updatedData = currentData.copy(duration = duration)
+        currentFlow.update { updatedData }
     }
 }

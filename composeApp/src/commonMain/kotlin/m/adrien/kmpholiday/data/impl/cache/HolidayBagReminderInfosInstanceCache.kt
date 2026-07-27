@@ -8,5 +8,5 @@ interface HolidayBagReminderInfosInstanceCache {
     suspend fun saveReminderInstance(holidayId: String, reminderData: HolidayReminderInstanceData)
     suspend fun setReminderInstanceDuration(holidayId: String, duration: Int)
     suspend fun checkItem(holidayId: String, itemId: String, checked: Boolean)
-    suspend fun resetHoliday(holidayId: String)
+    suspend fun emptyHolidayBagWithNewDuration(holidayId: String, duration: Int)
 }

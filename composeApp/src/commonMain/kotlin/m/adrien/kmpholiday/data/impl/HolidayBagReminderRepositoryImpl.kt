@@ -2,7 +2,6 @@ package m.adrien.kmpholiday.data.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import m.adrien.kmpholiday.data.HolidayReminderInstanceData
 import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderCacheFactory
 import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderInfosInstanceCache
 import m.adrien.kmpholiday.domain.ItemInBag
@@ -63,8 +62,8 @@ class HolidayBagReminderRepositoryImpl(
         return false
     }
 
-    override suspend fun reset(id: HolidayBagReminderId): Boolean {
-        holidayReminderInstanceCache.resetHoliday(id)
+    override suspend fun resetWithNewDuration(id: HolidayBagReminderId, duration: Int): Boolean {
+        holidayReminderInstanceCache.emptyHolidayBagWithNewDuration(id, duration)
         return true
     }
 }

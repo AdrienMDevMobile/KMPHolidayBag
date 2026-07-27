@@ -11,5 +11,5 @@ interface HolidayBagReminderRepository {
     suspend fun checkItemInBag(holidayId: HolidayBagReminderId, itemId: ItemInBagId, checked: Boolean): Boolean
     suspend fun setHolidayDuration(holidayId: HolidayBagReminderId, duration: Int): Boolean
     suspend fun edit(itemId: ItemInBagId, newItem: ItemInBag): Boolean
-    suspend fun reset(id: HolidayBagReminderId): Boolean
+    suspend fun resetWithNewDuration(id: HolidayBagReminderId, duration: Int): Boolean
 }
