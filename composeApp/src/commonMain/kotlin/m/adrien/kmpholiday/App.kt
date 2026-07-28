@@ -10,6 +10,7 @@ import kotlinx.serialization.Serializable
 import m.adrien.kmpholiday.view.holidayBag.HolidayBagReminderScreen
 import m.adrien.kmpholiday.view.holidays.HolidaysScreen
 import m.adrien.kmpholiday.view.holidays.HolidaysViewModel
+import m.adrien.kmpholiday.view.settings.SettingsScreen
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -26,6 +27,7 @@ fun App() {
                 val viewModel: HolidaysViewModel = koinViewModel()
                 HolidaysScreen(
                     onNavigateToHoliday = { id -> navController.navigate(Holiday(id)) },
+                    onNavigateToSettings = { navController.navigate(Settings) },
                     viewModel = viewModel
                 )
             }
@@ -33,6 +35,9 @@ fun App() {
                 HolidayBagReminderScreen(
                     onNavigateBack = { navController.popBackStack() }
                 )
+            }
+            composable<Settings> {
+                SettingsScreen()
             }
         }
     }
@@ -43,3 +48,6 @@ object Holidays
 
 @Serializable
 data class Holiday(val holidayId: String)
+
+@Serializable
+object Settings

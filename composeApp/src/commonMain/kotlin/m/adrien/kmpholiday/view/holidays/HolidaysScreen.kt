@@ -1,12 +1,15 @@
 package m.adrien.kmpholiday.view.holidays
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,14 +17,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
+import androidx.compose.ui.unit.dp
 import m.adrien.kmpholiday.view.holidays.value.HolidaysNavigationEvent
 import m.adrien.kmpholiday.view.shared.ErrorPage
 import m.adrien.kmpholiday.view.shared.LoadingPage
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HolidaysScreen(
     onNavigateToHoliday: (String) -> Unit,
+    onNavigateToSettings: () -> Unit,
     viewModel: HolidaysViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -35,36 +40,66 @@ fun HolidaysScreen(
                     onNavigateToHoliday(it.holidayId)
                     viewModel.onNavigationEventProcessed(it.id)
                 }
+
+                is HolidaysNavigationEvent.NavigateToSettings -> {
+                    onNavigateToSettings()
+                    viewModel.onNavigationEventProcessed(it.id)
+                }
             }
         }
     }
 
-    HolidaysPage(state, { holidayId -> viewModel.onHolidayClick(holidayId) })
+    HolidaysPage(
+        state,
+        { holidayId ->
+            viewModel.onHolidayClick(holidayId)
+        },
+        {
+            viewModel.onSettingsClick()
+        }
+    )
 }
 
 @Composable
 fun HolidaysPage(
     uiState: HolidayBagRemindersUiState,
     goToHoliday: (String) -> Unit,
+    onNavigateToSettings: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .safeContentPadding()
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
+        modifier = Modifier.background(
+            MaterialTheme.colorScheme.primaryContainer
+        )
     ) {
-        when (uiState) {
-            is HolidayBagRemindersUiState.Loading -> {
-                LoadingPage()
-            }
+        Box(
+            modifier = Modifier
+                .safeContentPadding()
+                .fillMaxSize()
+        ) {
+            when (uiState) {
+                is HolidayBagRemindersUiState.Loading -> {
+                    LoadingPage()
+                }
 
-            is HolidayBagRemindersUiState.Error -> {
-                ErrorPage("Error: ${uiState.message}")
-            }
+                is HolidayBagRemindersUiState.Error -> {
+                    ErrorPage("Error: ${uiState.message}")
+                }
 
-            is HolidayBagRemindersUiState.Success -> {
-                HolidayBagRemindersList(uiState.reminders, goToHoliday)
+                is HolidayBagRemindersUiState.Success -> {
+                    HolidaysReminderPageLoaded(uiState.reminders, goToHoliday)
+                }
+            }
+            // Settings button positioned in top-end (top-right)
+            IconButton(
+                onClick = onNavigateToSettings,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "Settings"
+                )
             }
         }
     }
@@ -80,7 +115,7 @@ fun HolidaysPageSuccessPreview() {
     )
     HolidaysPage(
         uiState = HolidayBagRemindersUiState.Success(sampleReminders),
-        {}
+        {}, {}
     )
 }
 
@@ -88,7 +123,7 @@ fun HolidaysPageSuccessPreview() {
 @Composable
 fun HolidaysPageLoadingPreview() {
     HolidaysPage(
-        uiState = HolidayBagRemindersUiState.Loading, {}
+        uiState = HolidayBagRemindersUiState.Loading, {}, {}
     )
 }
 
@@ -96,7 +131,6 @@ fun HolidaysPageLoadingPreview() {
 @Composable
 fun HolidaysPageErrorPreview() {
     HolidaysPage(
-        uiState = HolidayBagRemindersUiState.Error("Failed to load holidays"),
-        {}
+        uiState = HolidayBagRemindersUiState.Error("Failed to load holidays"), {}, {}
     )
 }

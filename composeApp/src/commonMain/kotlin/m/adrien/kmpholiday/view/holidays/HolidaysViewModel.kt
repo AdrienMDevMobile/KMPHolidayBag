@@ -36,6 +36,14 @@ class HolidaysViewModel(
         }
     }
 
+    fun onSettingsClick() {
+        viewModelScope.launch {
+            _navigationEvents.update { currentEvents ->
+                currentEvents + HolidaysNavigationEvent.NavigateToSettings
+            }
+        }
+    }
+
     fun onNavigationEventProcessed(eventId: String) {
         _navigationEvents.value = _navigationEvents.value.filterNot { navigationEvent ->
             navigationEvent.id == eventId
