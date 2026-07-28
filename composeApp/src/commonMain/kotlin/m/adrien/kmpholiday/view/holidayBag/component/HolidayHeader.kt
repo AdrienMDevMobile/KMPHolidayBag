@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -39,6 +40,7 @@ fun HolidayHeader(
     onEditModeToggle: () -> Unit,
     onDurationChange: (Int) -> Unit,
     onReinitialize: () -> Unit,
+    onBackPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var durationText by remember { mutableStateOf(durationDay.toString()) }
@@ -47,14 +49,28 @@ fun HolidayHeader(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = name,
-            style = MaterialTheme.typography.headlineMedium.copy(
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            ),
-            color = MaterialTheme.colorScheme.primary
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            IconButton(onClick = onBackPressed) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back"
+                )
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = name,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                ),
+                color = MaterialTheme.colorScheme.primary
+            )
+            Spacer(modifier = Modifier.weight(1f))
+        }
         Spacer(modifier = Modifier.height(8.dp))
 
         if (isEditing) {
@@ -162,7 +178,8 @@ fun HolidayHeaderPreview() {
             isEditing = false,
             onEditModeToggle = { },
             onDurationChange = { },
-            onReinitialize = { }
+            onReinitialize = { },
+            onBackPressed = { }
         )
     }
 }
@@ -177,7 +194,8 @@ fun HolidayHeaderPreviewEditing() {
             isEditing = true,
             onEditModeToggle = { },
             onDurationChange = { },
-            onReinitialize = { }
+            onReinitialize = { },
+            onBackPressed = { }
         )
     }
 }

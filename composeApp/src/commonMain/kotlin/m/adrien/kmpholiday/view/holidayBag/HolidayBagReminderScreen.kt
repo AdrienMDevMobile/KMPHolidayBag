@@ -2,11 +2,15 @@ package m.adrien.kmpholiday.view.holidayBag
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import m.adrien.kmpholiday.view.holidayBag.component.HolidayHeader
 import m.adrien.kmpholiday.view.holidayBag.component.ItemsInBagList
+import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagNavigationEvent
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
 import m.adrien.kmpholiday.view.holidayBag.value.InitializeBagDialogUiState
 import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
@@ -23,7 +28,8 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HolidayBagReminderScreen(
-    viewModel: HolidayBagReminderViewModel = koinViewModel()
+    viewModel: HolidayBagReminderViewModel = koinViewModel(),
+    onNavigateBack: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -35,6 +41,20 @@ fun HolidayBagReminderScreen(
 
     // Get the initialize dialog state from view model
     val initializeDialogUiState by viewModel.initializeBagDialogUiState.collectAsState(null)
+
+    val events by viewModel.navigationEvents.collectAsState()
+
+    // Handle navigation events as a cold flow
+    LaunchedEffect(events) {
+        events.firstOrNull()?.let {
+            when (it) {
+                HolidayBagNavigationEvent.NavigateBack -> {
+                    onNavigateBack()
+                    viewModel.onNavigationEventProcessed(it.id)
+                }
+            }
+        }
+    }
 
     HolidayBagReminderPage(
         uiState = uiState,
@@ -54,6 +74,7 @@ fun HolidayBagReminderScreen(
         onReinitializeDurationChange = { newDuration ->
             viewModel.updateInitializeDialogDuration(newDuration)
         },
+        onBackPressed = { viewModel.onBackPressed() },
     )
 }
 
@@ -68,9 +89,12 @@ fun HolidayBagReminderPage(
     onValidateReinitialize: () -> Unit,
     onCancelReinitialize: () -> Unit,
     onReinitializeDurationChange: (String) -> Unit,
+    onBackPressed: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing),
         color = MaterialTheme.colorScheme.background
     ) {
         when (uiState) {
@@ -82,7 +106,8 @@ fun HolidayBagReminderPage(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp),
+                        .padding(16.dp)
+                        .windowInsetsPadding(WindowInsets.safeDrawing),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     HolidayHeader(
@@ -92,6 +117,7 @@ fun HolidayBagReminderPage(
                         onEditModeToggle = onEditModeToggle,
                         onDurationChange = onDurationChange,
                         onReinitialize = onReinitialize,
+                        onBackPressed = onBackPressed,
                     )
 
                     ItemsInBagList(
@@ -122,6 +148,7 @@ fun HolidayBagReminderPage(
 @Composable
 fun HolidayBagReminderScreenPreview() {
     MaterialTheme {
+        // Simplified preview - in a real app you would use a proper mock/view model
         HolidayBagReminderPage(
             uiState = HolidayBagReminderUiState.Value(
                 name = "Summer Vacation",
@@ -156,6 +183,7 @@ fun HolidayBagReminderScreenPreview() {
             onValidateReinitialize = { },
             onCancelReinitialize = { },
             onReinitializeDurationChange = { },
+            onBackPressed = { },
         )
     }
 }
@@ -179,6 +207,7 @@ fun HolidayBagReminderScreenEmptyPreview() {
             onValidateReinitialize = { },
             onCancelReinitialize = { },
             onReinitializeDurationChange = { },
+            onBackPressed = { },
         )
     }
 }
@@ -197,6 +226,7 @@ fun HolidayBagReminderScreenLoadingPreview() {
             onValidateReinitialize = { },
             onCancelReinitialize = { },
             onReinitializeDurationChange = { },
+            onBackPressed = { },
         )
     }
 }
@@ -215,6 +245,7 @@ fun HolidayBagReminderScreenErrorPreview() {
             onValidateReinitialize = { },
             onCancelReinitialize = { },
             onReinitializeDurationChange = { },
+            onBackPressed = { },
         )
     }
 }
@@ -251,6 +282,7 @@ fun HolidayBagReminderScreenEditingPreview() {
             onValidateReinitialize = { },
             onCancelReinitialize = { },
             onReinitializeDurationChange = { },
+            onBackPressed = { },
         )
     }
 }

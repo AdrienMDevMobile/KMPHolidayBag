@@ -11,8 +11,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
+import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagNavigationEvent
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
 import m.adrien.kmpholiday.view.holidayBag.value.InitializeBagDialogUiState
 import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
@@ -32,6 +34,11 @@ class HolidayBagReminderViewModel(
     private val _initializeBagDialogUiState: MutableStateFlow<InitializeBagDialogUiState?> =
         MutableStateFlow(null)
 
+    val navigationEvents: StateFlow<List<HolidayBagNavigationEvent>>
+        get() = _navigationEvents
+    private val _navigationEvents = MutableStateFlow<List<HolidayBagNavigationEvent>>(emptyList())
+
+    // Combine the repository data with editing state only
     val uiState: StateFlow<HolidayBagReminderUiState> =
         holidayRepository.get(holidayId)
             .combine(isEditingOn) { data, editingOn ->
@@ -121,6 +128,20 @@ class HolidayBagReminderViewModel(
 
     fun hideInitializeDialog() {
         _initializeBagDialogUiState.value = null
+    }
+
+    fun onBackPressed() {
+        // Emit navigation event as a one-time event
+        viewModelScope.launch {
+            _navigationEvents.update { currentEvents ->
+                currentEvents + HolidayBagNavigationEvent.NavigateBack
+            }
+
+        }
+    }
+
+    fun onNavigationEventProcessed(eventId: String) {
+        _navigationEvents.value.filterNot { navigationEvent -> navigationEvent.id == eventId }
     }
 
     /*

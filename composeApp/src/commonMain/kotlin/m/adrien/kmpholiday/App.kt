@@ -30,7 +30,9 @@ fun App() {
                 )
             }
             composable<Holiday> {
-                HolidayBagReminderScreen()
+                HolidayBagReminderScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
         }
     }
