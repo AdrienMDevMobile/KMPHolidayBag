@@ -25,7 +25,7 @@ fun App() {
             composable<Holidays> {
                 val viewModel: HolidaysViewModel = koinViewModel()
                 HolidaysScreen(
-                    goToHoliday = { id -> navController.navigate(Holiday(id)) },
+                    onNavigateToHoliday = { id -> navController.navigate(Holiday(id)) },
                     viewModel = viewModel
                 )
             }

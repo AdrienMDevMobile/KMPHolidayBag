@@ -8,23 +8,38 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
+import m.adrien.kmpholiday.view.holidays.value.HolidaysNavigationEvent
 import m.adrien.kmpholiday.view.shared.ErrorPage
 import m.adrien.kmpholiday.view.shared.LoadingPage
 
 @Composable
 fun HolidaysScreen(
-    goToHoliday: (String) -> Unit,
+    onNavigateToHoliday: (String) -> Unit,
     viewModel: HolidaysViewModel = koinViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+    val events by viewModel.navigationEvents.collectAsState()
 
-    HolidaysPage(state, goToHoliday)
+    // Handle navigation events as a cold flow
+    LaunchedEffect(events) {
+        events.firstOrNull()?.let {
+            when (it) {
+                is HolidaysNavigationEvent.NavigateToHoliday -> {
+                    onNavigateToHoliday(it.holidayId)
+                    viewModel.onNavigationEventProcessed(it.id)
+                }
+            }
+        }
+    }
+
+    HolidaysPage(state, { holidayId -> viewModel.onHolidayClick(holidayId) })
 }
 
 @Composable
