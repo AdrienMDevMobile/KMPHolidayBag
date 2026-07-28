@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class HolidayBagReminderViewModel(
     @OptIn(SavedStateHandleSaveableApi::class)
     private val holidayId = savedStateHandle.get<String>("holidayId") ?: ""
 
-    private var isEditingOn = false
+    private var isEditingOn: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val initializeBagDialogUiState: StateFlow<InitializeBagDialogUiState?>
         get() = _initializeBagDialogUiState
@@ -34,10 +34,10 @@ class HolidayBagReminderViewModel(
 
     val uiState: StateFlow<HolidayBagReminderUiState> =
         holidayRepository.get(holidayId)
-            .map { data ->
+            .combine(isEditingOn) { data, editingOn ->
                 val baseUiState = data.toUiState()
                 if (baseUiState is HolidayBagReminderUiState.Value) {
-                    baseUiState.copy(isEditingOn = isEditingOn)
+                    baseUiState.copy(isEditingOn = editingOn)
                 } else {
                     baseUiState
                 }
@@ -51,7 +51,7 @@ class HolidayBagReminderViewModel(
             )
 
     fun toggleEditMode() {
-        isEditingOn = !isEditingOn
+        isEditingOn.value = !isEditingOn.value
     }
 
     fun toggleItemChecked(itemId: String, checked: Boolean) {
