@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Replay
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -101,13 +103,19 @@ fun HolidayHeaderEditMode(
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Number
             ),
-            modifier = Modifier.weight(2f)
+            modifier = Modifier.width(150.dp)
         )
-        Button(onClick = onCancel, modifier = Modifier.weight(1f)) {
-            Text("Cancel")
+        IconButton(onClick = onCancel) {
+            Icon(
+                imageVector = Icons.Filled.Close,
+                contentDescription = "Cancel"
+            )
         }
-        Button(onClick = onSave, modifier = Modifier.weight(1f)) {
-            Text("Save")
+        IconButton(onClick = onSave) {
+            Icon(
+                imageVector = Icons.Filled.Check,
+                contentDescription = "Save"
+            )
         }
     }
 }
