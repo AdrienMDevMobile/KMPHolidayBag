@@ -9,10 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -85,47 +87,46 @@ fun SettingsPage(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            // Keep Screen On Setting
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                Text(
-                    text = "Keep Screen On",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-
-                // Switch and Info Button Row
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Switch(
-                        checked = uiState.keepScreenOn,
-                        onCheckedChange = { onKeepScreenOnToggle() }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Keep Screen On",
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
 
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    Button(
-                        onClick = { onInfoButtonClick() },
-                        modifier = Modifier.padding(start = 16.dp)
-                    ) {
-                        Text("ℹ️")
+                    IconButton(onClick = { onInfoButtonClick() }) {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = "Back",
+                            modifier = Modifier.size(20.dp)
+                        )
                     }
                 }
 
-                // Tooltip/Info Text
-                if (uiState.showTooltip) {
-                    Text(
-                        text = "Keep screen on while inside the list of a holiday bag",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                }
+                Text(
+                    text = "Keep screen on while inside the list of a holiday bag",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .alpha(
+                            if (uiState.showTooltip) {
+                                1f
+                            } else {
+                                0f
+                            }
+                        )
+                )
+
+                Switch(
+                    checked = uiState.keepScreenOn,
+                    onCheckedChange = { onKeepScreenOnToggle() }
+                )
             }
         }
     }
