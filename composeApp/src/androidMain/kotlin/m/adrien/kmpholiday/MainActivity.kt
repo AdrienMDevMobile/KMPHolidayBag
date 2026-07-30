@@ -17,6 +17,9 @@ class MainActivity : ComponentActivity() {
 
         // Initialize the cache factory with application context
         HolidayBagReminderCacheFactory.init(applicationContext)
+        
+        // Initialize SettingsRepository with application context
+        m.adrien.kmpholiday.data.impl.SettingsRepositoryImpl.init(applicationContext)
 
         setContent {
             App()

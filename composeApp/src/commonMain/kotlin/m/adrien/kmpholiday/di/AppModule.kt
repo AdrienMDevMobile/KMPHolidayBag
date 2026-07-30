@@ -19,6 +19,9 @@ val appModule = module {
         HolidayBagReminderRepositoryImpl()
     }
 
+    // SettingsRepository is handled by platform-specific modules
+    // because Android implementation requires Context
+
     // ViewModels
     viewModelOf(::HolidaysViewModel)
     viewModelOf(::SettingsViewModel)
