@@ -100,7 +100,6 @@ fun SettingsPage(
                     Text(
                         text = "Keep Screen On",
                         style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(bottom = 8.dp)
                     )
 
                     IconButton(onClick = { onInfoButtonClick() }) {
