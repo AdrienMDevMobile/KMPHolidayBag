@@ -26,9 +26,11 @@ import m.adrien.kmpholiday.view.holidayBag.value.InitializeBagDialogUiState
 @Composable
 fun InitializeDialog(
     uiState: InitializeBagDialogUiState,
+    onDurationChanged: (String) -> Unit,
     onValidate: () -> Unit,
     onCancel: () -> Unit,
-    onDurationChanged: (String) -> Unit = {}
+    modifier: Modifier = Modifier,
+
 ) {
     val focusRequester = remember { FocusRequester() }
     

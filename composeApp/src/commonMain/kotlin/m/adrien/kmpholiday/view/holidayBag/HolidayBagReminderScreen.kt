@@ -28,8 +28,10 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HolidayBagReminderScreen(
+    onNavigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: HolidayBagReminderViewModel = koinViewModel(),
-    onNavigateBack: () -> Unit
+
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -57,6 +59,7 @@ fun HolidayBagReminderScreen(
     }
 
     HolidayBagReminderPage(
+        modifier = modifier,
         uiState = uiState,
         initializeBagDialogUiState = initializeDialogUiState,
         onEditModeToggle = { viewModel.toggleEditMode() },
@@ -80,6 +83,7 @@ fun HolidayBagReminderScreen(
 
 @Composable
 fun HolidayBagReminderPage(
+    modifier: Modifier = Modifier,
     uiState: HolidayBagReminderUiState,
     initializeBagDialogUiState: InitializeBagDialogUiState?,
     onEditModeToggle: () -> Unit,
@@ -92,14 +96,14 @@ fun HolidayBagReminderPage(
     onBackPressed: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing),
         color = MaterialTheme.colorScheme.background
     ) {
         when (uiState) {
             HolidayBagReminderUiState.Loading -> {
-                LoadingPage()
+                LoadingPage(modifier = Modifier)
             }
 
             is HolidayBagReminderUiState.Value -> {
@@ -121,6 +125,7 @@ fun HolidayBagReminderPage(
                     )
 
                     ItemsInBagList(
+                        modifier = Modifier,
                         items = uiState.items,
                         onItemCheckedChange = onItemCheckedChange
                     )
@@ -128,7 +133,7 @@ fun HolidayBagReminderPage(
             }
 
             is HolidayBagReminderUiState.Error -> {
-                ErrorPage(errorMessage = uiState.message)
+                ErrorPage(modifier = Modifier, errorMessage = uiState.message)
             }
         }
 

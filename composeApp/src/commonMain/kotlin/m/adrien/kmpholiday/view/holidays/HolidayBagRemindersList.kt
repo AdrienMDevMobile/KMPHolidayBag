@@ -1,6 +1,5 @@
 package m.adrien.kmpholiday.view.holidays
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,9 +19,10 @@ import androidx.compose.ui.unit.dp
 fun HolidaysReminderPageLoaded(
     list: List<HolidayBagReminderPreviewUiState>,
     goToHoliday: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -45,6 +44,7 @@ fun HolidaysReminderPageLoaded(
 fun HolidayBagRemindersList(
     list: List<HolidayBagReminderPreviewUiState>,
     goToHoliday: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     list.forEach { holiday ->
         HolidayBagReminderButton(

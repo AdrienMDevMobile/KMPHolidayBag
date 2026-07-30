@@ -27,7 +27,8 @@ import org.koin.compose.viewmodel.koinViewModel
 fun HolidaysScreen(
     onNavigateToHoliday: (String) -> Unit,
     onNavigateToSettings: () -> Unit,
-    viewModel: HolidaysViewModel = koinViewModel()
+    viewModel: HolidaysViewModel = koinViewModel(),
+    modifier: Modifier = Modifier,
 ) {
     val state by viewModel.uiState.collectAsState()
     val events by viewModel.navigationEvents.collectAsState()
@@ -56,7 +57,8 @@ fun HolidaysScreen(
         },
         {
             viewModel.onSettingsClick()
-        }
+        },
+        modifier = modifier,
     )
 }
 
@@ -65,9 +67,10 @@ fun HolidaysPage(
     uiState: HolidayBagRemindersUiState,
     goToHoliday: (String) -> Unit,
     onNavigateToSettings: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier.background(
+        modifier = modifier.background(
             MaterialTheme.colorScheme.primaryContainer
         )
     ) {
@@ -78,11 +81,11 @@ fun HolidaysPage(
         ) {
             when (uiState) {
                 is HolidayBagRemindersUiState.Loading -> {
-                    LoadingPage()
+                    LoadingPage(modifier = Modifier)
                 }
 
                 is HolidayBagRemindersUiState.Error -> {
-                    ErrorPage("Error: ${uiState.message}")
+                    ErrorPage(errorMessage = "Error: ${uiState.message}")
                 }
 
                 is HolidayBagRemindersUiState.Success -> {

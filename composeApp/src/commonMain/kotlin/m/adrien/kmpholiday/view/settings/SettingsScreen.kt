@@ -37,7 +37,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel = koinViewModel(),
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val events by viewModel.navigationEvents.collectAsState()
@@ -58,7 +59,8 @@ fun SettingsScreen(
         uiState = uiState,
         onKeepScreenOnToggle = { viewModel.toggleKeepScreenOn() },
         onInfoButtonClick = { viewModel.toggleShowTooltipKeepScreenOn() },
-        onBackPressed = { viewModel.onBackPressed() }
+        onBackPressed = { viewModel.onBackPressed() },
+        modifier = modifier
     )
 }
 
@@ -67,10 +69,11 @@ fun SettingsPage(
     uiState: SettingsUiState,
     onKeepScreenOnToggle: () -> Unit,
     onInfoButtonClick: () -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing),
         color = MaterialTheme.colorScheme.background
@@ -169,7 +172,7 @@ fun SettingsPagePreview() {
             uiState = SettingsUiState(keepScreenOn = true, showTooltip = false),
             onKeepScreenOnToggle = {},
             onInfoButtonClick = {},
-            onBackPressed = {}
+            onBackPressed = {},
         )
     }
 }
@@ -182,7 +185,7 @@ fun SettingsPageTooltipPreview() {
             uiState = SettingsUiState(keepScreenOn = false, showTooltip = true),
             onKeepScreenOnToggle = {},
             onInfoButtonClick = {},
-            onBackPressed = {}
+            onBackPressed = {},
         )
     }
 }
