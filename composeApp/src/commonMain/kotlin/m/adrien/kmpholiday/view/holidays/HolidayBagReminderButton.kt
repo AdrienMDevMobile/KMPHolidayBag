@@ -20,6 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kmpholiday.composeapp.generated.resources.Res
+import kmpholiday.composeapp.generated.resources.view_details_content_description
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HolidayBagReminderButton(
@@ -48,7 +51,7 @@ fun HolidayBagReminderButton(
             )
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                contentDescription = "View details",
+                contentDescription = stringResource(Res.string.view_details_content_description),
                 modifier = Modifier.padding(end = 16.dp)
             )
         }

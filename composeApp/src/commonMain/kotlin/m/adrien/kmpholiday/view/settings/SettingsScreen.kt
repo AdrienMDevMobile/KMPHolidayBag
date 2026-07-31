@@ -31,7 +31,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kmpholiday.composeapp.generated.resources.Res
+import kmpholiday.composeapp.generated.resources.back_button_content_description
+import kmpholiday.composeapp.generated.resources.settings_keep_screen_on_description
+import kmpholiday.composeapp.generated.resources.settings_keep_screen_on_title
+import kmpholiday.composeapp.generated.resources.settings_title
 import m.adrien.kmpholiday.view.settings.value.SettingsNavigationEvent
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -98,21 +104,21 @@ fun SettingsPage(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Keep Screen On",
+                        text = stringResource(Res.string.settings_keep_screen_on_title),
                         style = MaterialTheme.typography.bodyLarge,
                     )
 
                     IconButton(onClick = { onInfoButtonClick() }) {
                         Icon(
                             imageVector = Icons.Filled.Info,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(Res.string.back_button_content_description),
                             modifier = Modifier.size(20.dp)
                         )
                     }
                 }
 
                 Text(
-                    text = "Keep screen on while inside the list of a holiday bag",
+                    text = stringResource(Res.string.settings_keep_screen_on_description),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
@@ -147,12 +153,12 @@ fun SettingsHeader(
         IconButton(onClick = onBackPressed) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back"
+                contentDescription = stringResource(Res.string.back_button_content_description)
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = "Settings",
+            text = stringResource(Res.string.settings_title),
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp

@@ -17,7 +17,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.dp
+import kmpholiday.composeapp.generated.resources.Res
+import kmpholiday.composeapp.generated.resources.settings_button_content_description
 import m.adrien.kmpholiday.view.holidays.value.HolidaysNavigationEvent
 import m.adrien.kmpholiday.view.shared.ErrorPage
 import m.adrien.kmpholiday.view.shared.LoadingPage
@@ -101,7 +104,7 @@ fun HolidaysPage(
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings"
+                    contentDescription = stringResource(Res.string.settings_button_content_description)
                 )
             }
         }

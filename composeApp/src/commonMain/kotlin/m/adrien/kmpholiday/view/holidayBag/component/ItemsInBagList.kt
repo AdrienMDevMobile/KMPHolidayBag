@@ -8,6 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kmpholiday.composeapp.generated.resources.Res
+import kmpholiday.composeapp.generated.resources.items_list_empty
+import org.jetbrains.compose.resources.stringResource
 import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 
 @Composable
@@ -27,7 +30,7 @@ fun ItemsInBagList(
         ) {
             if (items.isEmpty()) {
                 Text(
-                    text = "No items yet",
+                    text = stringResource(Res.string.items_list_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     modifier = Modifier.padding(16.dp)

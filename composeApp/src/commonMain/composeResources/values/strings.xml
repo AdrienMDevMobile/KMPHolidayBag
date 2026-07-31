@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings Screen -->
+    <string name="settings_keep_screen_on_title">Keep Screen On</string>
+    <string name="settings_keep_screen_on_description">Keep screen on while inside the list of a holiday bag</string>
+    <string name="settings_title">Settings</string>
+    <string name="back_button_content_description">Back</string>
+    <string name="info_button_content_description">Info</string>
+
+    <!-- Holidays Screen -->
+    <string name="holidays_title">Holiday Bag Reminders</string>
+    <string name="view_details_content_description">View details</string>
+    <string name="settings_button_content_description">Settings</string>
+
+    <!-- Holiday Bag Screen -->
+    <string name="items_list_empty">No items yet</string>
+    <string name="duration_label">Duration: %1$d days</string>
+    <string name="quantity_label">Qty: %1$d</string>
+    <string name="edit_duration_content_description">Edit duration</string>
+    <string name="reinitialize_holiday_content_description">Reinitialize holiday</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+    <string name="validate_button">Validate</string>
+    <string name="new_duration_label">New Duration (days)</string>
+
+    <!-- Error Messages -->
+    <string name="error_failed_to_load_holiday_data">Failed to load holiday data</string>
+</resources>

@@ -13,7 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.dp
+import kmpholiday.composeapp.generated.resources.Res
+import kmpholiday.composeapp.generated.resources.holidays_title
 
 @Composable
 fun HolidaysReminderPageLoaded(
@@ -28,7 +31,7 @@ fun HolidaysReminderPageLoaded(
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = "Holiday Bag Reminders",
+                text = stringResource(Res.string.holidays_title),
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier

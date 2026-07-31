@@ -14,7 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.unit.dp
+import kmpholiday.composeapp.generated.resources.Res
+import kmpholiday.composeapp.generated.resources.quantity_label
 import m.adrien.kmpholiday.view.holidayBag.value.ItemInBagUiState
 
 @Composable
@@ -41,7 +44,7 @@ fun ItemInBag(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Qty: ${item.quantity}",
+                text = stringResource(Res.string.quantity_label, item.quantity),
                 style = MaterialTheme.typography.bodyMedium
             )
 

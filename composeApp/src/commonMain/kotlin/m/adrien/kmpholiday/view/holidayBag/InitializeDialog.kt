@@ -17,10 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import kmpholiday.composeapp.generated.resources.Res
+import kmpholiday.composeapp.generated.resources.cancel_button
+import kmpholiday.composeapp.generated.resources.new_duration_label
+import kmpholiday.composeapp.generated.resources.validate_button
 import m.adrien.kmpholiday.view.holidayBag.value.InitializeBagDialogUiState
 
 @Composable
@@ -54,7 +59,7 @@ fun InitializeDialog(
                 OutlinedTextField(
                     value = uiState.duration ?: "",
                     onValueChange = onDurationChanged,
-                    label = { Text("New Duration (days)") },
+                    label = { Text(stringResource(Res.string.new_duration_label)) },
                     placeholder = {
                         //if (uiState.duration.isNullOrBlank()) {
                             Text("${uiState.durationDefault}")
@@ -77,7 +82,7 @@ fun InitializeDialog(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Button(onClick = onCancel) {
-                        Text("Cancel")
+                        Text(stringResource(Res.string.cancel_button))
                     }
 
                     Button(
@@ -86,7 +91,7 @@ fun InitializeDialog(
                         },
                         enabled = uiState.error == null
                     ) {
-                        Text("Validate")
+                        Text(stringResource(Res.string.validate_button))
                     }
                 }
             }

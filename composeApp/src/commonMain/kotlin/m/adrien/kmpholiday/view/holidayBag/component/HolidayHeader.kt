@@ -27,10 +27,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kmpholiday.composeapp.generated.resources.Res
+import kmpholiday.composeapp.generated.resources.back_button_content_description
+import kmpholiday.composeapp.generated.resources.cancel_button
+import kmpholiday.composeapp.generated.resources.duration_label
+import kmpholiday.composeapp.generated.resources.edit_duration_content_description
+import kmpholiday.composeapp.generated.resources.reinitialize_holiday_content_description
+import kmpholiday.composeapp.generated.resources.save_button
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HolidayHeader(
@@ -57,7 +66,7 @@ fun HolidayHeader(
             IconButton(onClick = onBackPressed) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back"
+                    contentDescription = stringResource(Res.string.back_button_content_description)
                 )
             }
             Spacer(modifier = Modifier.weight(1f))
@@ -124,13 +133,13 @@ fun HolidayHeaderEditMode(
         IconButton(onClick = onCancel) {
             Icon(
                 imageVector = Icons.Filled.Close,
-                contentDescription = "Cancel"
+                contentDescription = stringResource(Res.string.cancel_button)
             )
         }
         IconButton(onClick = onSave) {
             Icon(
                 imageVector = Icons.Filled.Check,
-                contentDescription = "Save"
+                contentDescription = stringResource(Res.string.save_button)
             )
         }
     }
@@ -149,20 +158,20 @@ fun HolidayHeaderDisplayMode(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = "Duration: $durationDay days",
+            text = stringResource(Res.string.duration_label, durationDay),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
         )
         IconButton(onClick = onEditClick) {
             Icon(
                 imageVector = Icons.Filled.Edit,
-                contentDescription = "Edit duration"
+                contentDescription = stringResource(Res.string.edit_duration_content_description)
             )
         }
         IconButton(onClick = onReinitialize) {
             Icon(
                 imageVector = Icons.Filled.Replay,
-                contentDescription = "Reinitialize holiday"
+                contentDescription = stringResource(Res.string.reinitialize_holiday_content_description)
             )
         }
     }
