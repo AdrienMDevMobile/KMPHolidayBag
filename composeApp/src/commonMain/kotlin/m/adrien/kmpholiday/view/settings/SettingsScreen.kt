@@ -36,6 +36,7 @@ import kmpholiday.composeapp.generated.resources.back_button_content_description
 import kmpholiday.composeapp.generated.resources.settings_keep_screen_on_description
 import kmpholiday.composeapp.generated.resources.settings_keep_screen_on_title
 import kmpholiday.composeapp.generated.resources.settings_title
+import m.adrien.kmpholiday.util.isJvm
 import m.adrien.kmpholiday.view.settings.value.SettingsNavigationEvent
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -102,39 +103,42 @@ fun SettingsPage(
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                // Only show Keep Screen On toggle for non-JVM platforms
+                if (!isJvm()) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = stringResource(Res.string.settings_keep_screen_on_title),
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+
+                        IconButton(onClick = { onInfoButtonClick() }) {
+                            Icon(
+                                imageVector = Icons.Filled.Info,
+                                contentDescription = stringResource(Res.string.back_button_content_description),
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                    }
+
                     Text(
-                        text = stringResource(Res.string.settings_keep_screen_on_title),
-                        style = MaterialTheme.typography.bodyLarge,
+                        text = stringResource(Res.string.settings_keep_screen_on_description),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .alpha(
+                                if (uiState.showTooltip) {
+                                    1f
+                                } else {
+                                    0f
+                                }
+                            )
                     )
 
-                    IconButton(onClick = { onInfoButtonClick() }) {
-                        Icon(
-                            imageVector = Icons.Filled.Info,
-                            contentDescription = stringResource(Res.string.back_button_content_description),
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
+                    Switch(
+                        checked = uiState.keepScreenOn,
+                        onCheckedChange = { onKeepScreenOnToggle() }
+                    )
                 }
-
-                Text(
-                    text = stringResource(Res.string.settings_keep_screen_on_description),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .alpha(
-                            if (uiState.showTooltip) {
-                                1f
-                            } else {
-                                0f
-                            }
-                        )
-                )
-
-                Switch(
-                    checked = uiState.keepScreenOn,
-                    onCheckedChange = { onKeepScreenOnToggle() }
-                )
             }
         }
     }
