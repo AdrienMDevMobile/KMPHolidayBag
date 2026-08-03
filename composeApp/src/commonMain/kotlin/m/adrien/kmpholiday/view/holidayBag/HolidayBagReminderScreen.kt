@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import m.adrien.kmpholiday.util.KeepScreenOn
 import m.adrien.kmpholiday.view.holidayBag.component.HolidayHeader
 import m.adrien.kmpholiday.view.holidayBag.component.ItemsInBagList
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagNavigationEvent
@@ -34,6 +35,10 @@ fun HolidayBagReminderScreen(
 
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val keepScreenOn by viewModel.keepScreenOn.collectAsState()
+
+    // Keep screen on based on the setting
+    KeepScreenOn(keepScreenOn = keepScreenOn)
 
     // Get current duration for the dialog
     val currentDuration = when (val state = uiState) {
