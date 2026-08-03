@@ -9,11 +9,13 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import m.adrien.kmpholiday.domain.repository.HolidayBagReminderRepository
+import m.adrien.kmpholiday.domain.repository.SettingsRepository
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagNavigationEvent
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagReminderUiState
 import m.adrien.kmpholiday.view.holidayBag.value.InitializeBagDialogUiState
@@ -22,6 +24,7 @@ import m.adrien.kmpholiday.view.holidayBag.value.toUiState
 
 class HolidayBagReminderViewModel(
     val holidayRepository: HolidayBagReminderRepository,
+    settingsRepository: SettingsRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     @OptIn(SavedStateHandleSaveableApi::class)
@@ -37,6 +40,14 @@ class HolidayBagReminderViewModel(
     val navigationEvents: StateFlow<List<HolidayBagNavigationEvent>>
         get() = _navigationEvents
     private val _navigationEvents = MutableStateFlow<List<HolidayBagNavigationEvent>>(emptyList())
+
+    val keepScreenOn: StateFlow<Boolean> = settingsRepository.get()
+        .map { settings -> settings.keepScreenOn }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false
+        )
 
     // Combine the repository data with editing state only
     val uiState: StateFlow<HolidayBagReminderUiState> =
