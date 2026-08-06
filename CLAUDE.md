@@ -50,10 +50,13 @@ Each platform's entry point wires up Koin and any context-dependent singletons b
   `HolidayBagReminderViewModel` (needs `SavedStateHandle`, currently only wired on Android).
 - `initKoin()` in each platform's `KoinInitializer.kt` starts Koin with `appModule + create<Platform>Module()`.
 
-### Data layer
+### Domain layer
 
 - `domain/` holds pure data classes and repository interfaces (`HolidayBagReminderRepository`,
   `SettingsRepository`, `HolidayBagReminderPreviewsRepository`) — no platform or framework dependencies.
+
+### Data layer
+
 - `data/impl/` holds the common implementations. `HolidayBagReminderRepositoryImpl` combines static trip
   definitions (`StaticDatas.listOfHolidayBagReminder`, hardcoded packing-list templates) with a per-instance
   cache holding user state (checked items, chosen duration) — trip *content* is static, only the user's
