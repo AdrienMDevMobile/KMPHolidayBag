@@ -24,6 +24,13 @@ Run all commands from the repo root.
 Common (`commonTest`) tests run on the JVM target via `jvmTest`; there's also `iosSimulatorArm64Test` for iOS
 and `connectedAndroidTest` for on-device/emulator Android instrumentation tests.
 
+Android is the primary development/testing target — assume that's the platform in use unless told otherwise.
+Write `commonTest` coverage for new repository/ViewModel logic; the existing test suite is currently a
+placeholder, but new logic should raise that bar rather than match it.
+
+Write code comments and commit messages in English (a few legacy French comments exist in the data layer;
+don't follow that precedent for new code).
+
 ## Architecture
 
 ### expect/actual platform split
@@ -59,8 +66,11 @@ Each platform's entry point wires up Koin and any context-dependent singletons b
 
 - `data/impl/` holds the common implementations. `HolidayBagReminderRepositoryImpl` combines static trip
   definitions (`StaticDatas.listOfHolidayBagReminder`, hardcoded packing-list templates) with a per-instance
-  cache holding user state (checked items, chosen duration) — trip *content* is static, only the user's
-  progress through a trip is mutable/cached.
+  cache holding user state (checked items, chosen duration) — trip *content* is currently static, only the
+  user's progress through a trip is mutable/cached. `HolidayBagReminderRepository.edit()` is a stub that
+  always returns `false`, and `HolidayBagReminderViewModel` has commented-out item-editing methods
+  (`updateHolidayName`, `addItem`, `removeItem`, etc.) — user-editable items/trips are on the roadmap but not
+  yet implemented, so expect to build this out rather than treat the stub as final.
 - The cache (`HolidayBagReminderInfosInstanceCache`) is obtained via the `expect object
   HolidayBagReminderCacheFactory`: Android uses a DataStore-backed implementation
   (`DataStoreHolidayBagReminderInfosInstanceCache`), other platforms fall back to
