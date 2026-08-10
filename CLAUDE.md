@@ -28,6 +28,10 @@ Android is the primary development/testing target — assume that's the platform
 Write `commonTest` coverage for new repository/ViewModel logic; the existing test suite is currently a
 placeholder, but new logic should raise that bar rather than match it.
 
+Never launch the app yourself if not requested (`./gradlew :composeApp:run`, installing/running the Android build, opening
+Xcode and running the iOS app, etc.). Verify changes via compiling, `jvmTest`/`allTests`, `lint`/`check`, and
+code review instead; leave manual/visual verification to the user.
+
 Write code comments and commit messages in English (a few legacy French comments exist in the data layer;
 don't follow that precedent for new code).
 
