@@ -18,6 +18,7 @@
     <string name="quantity_label">Qty: %1$d</string>
     <string name="edit_duration_content_description">Edit duration</string>
     <string name="reinitialize_holiday_content_description">Reinitialize holiday</string>
+    <string name="bag_complete_title">Bag complete</string>
     <string name="cancel_button">Cancel</string>
     <string name="save_button">Save</string>
     <string name="validate_button">Validate</string>

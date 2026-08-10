@@ -14,9 +14,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import m.adrien.kmpholiday.util.KeepScreenOn
+import m.adrien.kmpholiday.view.holidayBag.component.BagCompleteHeader
 import m.adrien.kmpholiday.view.holidayBag.component.HolidayHeader
 import m.adrien.kmpholiday.view.holidayBag.component.ItemsInBagList
 import m.adrien.kmpholiday.view.holidayBag.value.HolidayBagNavigationEvent
@@ -129,8 +131,12 @@ fun HolidayBagReminderPage(
                         onBackPressed = onBackPressed,
                     )
 
+                    if (uiState.isComplete) {
+                        BagCompleteHeader(onReset = onReinitialize)
+                    }
+
                     ItemsInBagList(
-                        modifier = Modifier,
+                        modifier = if (uiState.isComplete) Modifier.alpha(0.5f) else Modifier,
                         items = uiState.items,
                         onItemCheckedChange = onItemCheckedChange
                     )
@@ -184,6 +190,50 @@ fun HolidayBagReminderScreenPreview() {
                     )
                 ),
                 isEditingOn = false
+            ),
+            onEditModeToggle = { },
+            onItemCheckedChange = { string: String, bool: Boolean -> },
+            onDurationChange = { },
+            onReinitialize = { },
+            initializeBagDialogUiState = null,
+            onValidateReinitialize = { },
+            onCancelReinitialize = { },
+            onReinitializeDurationChange = { },
+            onBackPressed = { },
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HolidayBagReminderScreenCompletePreview() {
+    MaterialTheme {
+        HolidayBagReminderPage(
+            uiState = HolidayBagReminderUiState.Value(
+                name = "Summer Vacation",
+                durationDay = 14,
+                items = listOf(
+                    ItemInBagUiState(
+                        id = "swimsuit",
+                        name = "Swimsuit",
+                        checked = true,
+                        quantity = 2
+                    ),
+                    ItemInBagUiState(
+                        id = "sunglasses",
+                        name = "Sunglasses",
+                        checked = true,
+                        quantity = 1
+                    ),
+                    ItemInBagUiState(
+                        id = "beach_towel",
+                        name = "Beach Towel",
+                        checked = true,
+                        quantity = 3
+                    )
+                ),
+                isEditingOn = false,
+                isComplete = true
             ),
             onEditModeToggle = { },
             onItemCheckedChange = { string: String, bool: Boolean -> },

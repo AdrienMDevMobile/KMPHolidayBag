@@ -18,7 +18,8 @@ fun HolidayBagReminder.toUiState(): HolidayBagReminderUiState {
                 checked = item.checked,
                 quantity = quantity,
             )
-        }.sortedBy { it.checked } // Checked items at bottom
+        }.sortedBy { it.checked }, // Checked items at bottom
+        isComplete = this.items.isNotEmpty() && this.items.all { it.checked }
     )
 }
 
