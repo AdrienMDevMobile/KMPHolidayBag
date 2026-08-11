@@ -60,7 +60,7 @@ class HolidayBagReminderRepositoryTest {
         val repository = HolidayBagReminderRepositoryImpl(dao, HolidayBagReminderDatabaseSeeder(dao))
 
         val holiday = StaticDatas.listOfHolidayBagReminder.first()
-        val itemId = holiday.items.first().id
+        val itemId = repository.get(holiday.id).first().items.first().id
 
         repository.checkItemInBag(holiday.id, itemId, checked = true)
         repository.setHolidayDuration(holiday.id, duration = 5)
@@ -76,7 +76,7 @@ class HolidayBagReminderRepositoryTest {
         val repository = HolidayBagReminderRepositoryImpl(dao, HolidayBagReminderDatabaseSeeder(dao))
 
         val holiday = StaticDatas.listOfHolidayBagReminder.first()
-        val itemId = holiday.items.first().id
+        val itemId = repository.get(holiday.id).first().items.first().id
         repository.checkItemInBag(holiday.id, itemId, checked = true)
 
         repository.resetWithNewDuration(holiday.id, duration = 7)

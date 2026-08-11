@@ -6,14 +6,15 @@ import m.adrien.kmpholiday.domain.HolidayBagReminder
 import m.adrien.kmpholiday.domain.HolidayBagReminderId
 import m.adrien.kmpholiday.domain.HolidayBagReminderPreview
 import m.adrien.kmpholiday.domain.ItemInBag
+import m.adrien.kmpholiday.domain.ItemInBagId
 
 fun HolidayReminderFrameworkData.toEntity(): HolidayBagReminderEntity =
     HolidayBagReminderEntity(id = id, name = name, duration = duration)
 
-fun ItemInBagData.toEntity(holidayId: HolidayBagReminderId): ItemInBagEntity =
+fun ItemInBagData.toEntity(holidayId: HolidayBagReminderId, itemId: ItemInBagId): ItemInBagEntity =
     ItemInBagEntity(
         holidayId = holidayId,
-        itemId = id,
+        itemId = itemId,
         name = name,
         quantity = quantity,
         isDurationDependant = isDayDependant,

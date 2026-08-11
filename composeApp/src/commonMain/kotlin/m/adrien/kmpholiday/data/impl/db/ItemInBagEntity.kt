@@ -21,7 +21,6 @@ import m.adrien.kmpholiday.domain.ItemInBagId
 data class ItemInBagEntity(
     @PrimaryKey(autoGenerate = true) val uid: Long = 0,
     val holidayId: String,
-    // Domain item id: not unique within a holiday (StaticDatas has pre-existing duplicates), hence uid above.
     val itemId: ItemInBagId,
     val name: String,
     val quantity: Int,

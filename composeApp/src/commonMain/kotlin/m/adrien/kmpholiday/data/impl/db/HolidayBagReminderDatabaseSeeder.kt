@@ -18,7 +18,9 @@ class HolidayBagReminderDatabaseSeeder(private val dao: HolidayBagReminderDao) {
             if (dao.countHolidays() == 0) {
                 val holidays = StaticDatas.listOfHolidayBagReminder.map { it.toEntity() }
                 val items = StaticDatas.listOfHolidayBagReminder.flatMap { holiday ->
-                    holiday.items.map { it.toEntity(holidayId = holiday.id) }
+                    holiday.items.mapIndexed { index, item ->
+                        item.toEntity(holidayId = holiday.id, itemId = index.toString())
+                    }
                 }
                 dao.seedAll(holidays, items)
             }

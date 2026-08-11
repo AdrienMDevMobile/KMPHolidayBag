@@ -7,6 +7,8 @@ import androidx.room3.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
+//stick to one DAO : concentrates all the code in one element which is not the best,
+// but limits the complexity of many functions
 interface HolidayBagReminderDao {
 
     @Transaction
