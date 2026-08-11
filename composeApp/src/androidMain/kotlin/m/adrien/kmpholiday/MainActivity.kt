@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import m.adrien.kmpholiday.data.impl.cache.HolidayBagReminderCacheFactory
+import m.adrien.kmpholiday.data.impl.db.HolidayBagReminderDatabaseFactory
 import m.adrien.kmpholiday.di.initKoin
 
 class MainActivity : ComponentActivity() {
@@ -15,8 +15,8 @@ class MainActivity : ComponentActivity() {
         // Initialize Koin
         initKoin()
 
-        // Initialize the cache factory with application context
-        HolidayBagReminderCacheFactory.init(applicationContext)
+        // Initialize the Room database factory with application context
+        HolidayBagReminderDatabaseFactory.init(applicationContext)
         
         // Initialize SettingsRepository with application context
         m.adrien.kmpholiday.data.impl.SettingsRepositoryImpl.init(applicationContext)
