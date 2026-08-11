@@ -17,7 +17,7 @@ fun ItemInBagData.toEntity(holidayId: HolidayBagReminderId, itemId: ItemInBagId)
         itemId = itemId,
         name = name,
         quantity = quantity,
-        isDurationDependant = isDayDependant,
+        isDurationIndependant = isDayIndependant,
     )
 
 fun HolidayBagReminderWithItems.toDomain(): HolidayBagReminder =
@@ -34,7 +34,7 @@ fun ItemInBagEntity.toDomain(): ItemInBag =
         id = itemId,
         checked = checked,
         quantity = quantity,
-        isDurationDependant = isDurationDependant,
+        isDurationIndependant = isDurationIndependant,
     )
 
 fun HolidayBagReminderEntity.toPreview(): HolidayBagReminderPreview =

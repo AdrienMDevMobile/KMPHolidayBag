@@ -10,6 +10,7 @@ import m.adrien.kmpholiday.data.impl.HolidayBagReminderRepositoryImpl
 import m.adrien.kmpholiday.data.impl.StaticDatas
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class HolidayBagReminderRepositoryTest {
@@ -84,6 +85,41 @@ class HolidayBagReminderRepositoryTest {
         val result = repository.get(holiday.id).first()
         assertEquals(7, result.duration)
         assertTrue(result.items.none { it.checked })
+    }
+
+    @Test
+    fun edit_persists_new_quantity_and_duration_independant_flag() = runTest {
+        val dao = newInMemoryDb().holidayBagReminderDao()
+        val repository = HolidayBagReminderRepositoryImpl(dao, HolidayBagReminderDatabaseSeeder(dao))
+
+        val holiday = StaticDatas.listOfHolidayBagReminder.first()
+        val item = repository.get(holiday.id).first().items.first()
+
+        repository.edit(
+            holiday.id,
+            item.id,
+            item.copy(quantity = item.quantity + 3, isDurationIndependant = !item.isDurationIndependant)
+        )
+
+        val result = repository.get(holiday.id).first().items.first { it.id == item.id }
+        assertEquals(item.quantity + 3, result.quantity)
+        assertEquals(!item.isDurationIndependant, result.isDurationIndependant)
+    }
+
+    @Test
+    fun deleteItem_removes_item_and_is_reflected_in_subsequent_get() = runTest {
+        val dao = newInMemoryDb().holidayBagReminderDao()
+        val repository = HolidayBagReminderRepositoryImpl(dao, HolidayBagReminderDatabaseSeeder(dao))
+
+        val holiday = StaticDatas.listOfHolidayBagReminder.first()
+        val itemId = repository.get(holiday.id).first().items.first().id
+        val itemCountBefore = repository.get(holiday.id).first().items.size
+
+        repository.deleteItem(holiday.id, itemId)
+
+        val result = repository.get(holiday.id).first()
+        assertEquals(itemCountBefore - 1, result.items.size)
+        assertFalse(result.items.any { it.id == itemId })
     }
 
     @Test

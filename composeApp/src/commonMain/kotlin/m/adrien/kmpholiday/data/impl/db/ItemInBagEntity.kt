@@ -24,6 +24,6 @@ data class ItemInBagEntity(
     val itemId: ItemInBagId,
     val name: String,
     val quantity: Int,
-    val isDurationDependant: Boolean,
+    val isDurationIndependant: Boolean,
     val checked: Boolean = false,
 )

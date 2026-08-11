@@ -33,6 +33,21 @@ interface HolidayBagReminderDao {
     @Query("UPDATE item_in_bag SET checked = :checked WHERE holidayId = :holidayId AND itemId = :itemId")
     suspend fun updateChecked(holidayId: String, itemId: String, checked: Boolean)
 
+    @Query(
+        "UPDATE item_in_bag SET name = :name, quantity = :quantity, isDurationIndependant = :isDurationIndependant " +
+            "WHERE holidayId = :holidayId AND itemId = :itemId"
+    )
+    suspend fun updateItem(
+        holidayId: String,
+        itemId: String,
+        name: String,
+        quantity: Int,
+        isDurationIndependant: Boolean
+    )
+
+    @Query("DELETE FROM item_in_bag WHERE holidayId = :holidayId AND itemId = :itemId")
+    suspend fun deleteItem(holidayId: String, itemId: String)
+
     @Query("UPDATE item_in_bag SET checked = 0 WHERE holidayId = :holidayId")
     suspend fun clearChecked(holidayId: String)
 

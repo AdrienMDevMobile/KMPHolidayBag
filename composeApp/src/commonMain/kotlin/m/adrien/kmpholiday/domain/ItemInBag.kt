@@ -5,7 +5,7 @@ data class ItemInBag(
     val id: ItemInBagId,
     val checked: Boolean,
     val quantity: Int,
-    val isDurationDependant: Boolean
+    val isDurationIndependant: Boolean
 )
 
 typealias ItemInBagId = String

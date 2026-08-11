@@ -51,6 +51,8 @@ fun HolidayBagReminderScreen(
     // Get the initialize dialog state from view model
     val initializeDialogUiState by viewModel.initializeBagDialogUiState.collectAsState(null)
 
+    val showFixedQtyExplanation by viewModel.showFixedQtyExplanation.collectAsState()
+
     val events by viewModel.navigationEvents.collectAsState()
 
     // Handle navigation events as a cold flow
@@ -71,6 +73,13 @@ fun HolidayBagReminderScreen(
         initializeBagDialogUiState = initializeDialogUiState,
         onEditModeToggle = { viewModel.toggleEditMode() },
         onItemCheckedChange = { itemId, checked -> viewModel.toggleItemChecked(itemId, checked) },
+        onItemQuantityChange = { itemId, quantity -> viewModel.updateItemQuantity(itemId, quantity) },
+        onItemDurationIndependantChange = { itemId, durationIndependant ->
+            viewModel.updateItemDurationIndependant(itemId, durationIndependant)
+        },
+        onItemDelete = { itemId -> viewModel.deleteItem(itemId) },
+        showFixedQtyExplanation = showFixedQtyExplanation,
+        onFixedQtyInfoClick = { viewModel.toggleShowFixedQtyExplanation() },
         onDurationChange = { duration -> viewModel.changeHolidayDuration(duration) },
         onReinitialize = {
             viewModel.showInitializeDialog(currentDuration)
@@ -95,6 +104,11 @@ fun HolidayBagReminderPage(
     initializeBagDialogUiState: InitializeBagDialogUiState?,
     onEditModeToggle: () -> Unit,
     onItemCheckedChange: (String, Boolean) -> Unit,
+    onItemQuantityChange: (String, Int) -> Unit = { _, _ -> },
+    onItemDurationIndependantChange: (String, Boolean) -> Unit = { _, _ -> },
+    onItemDelete: (String) -> Unit = {},
+    showFixedQtyExplanation: Boolean = false,
+    onFixedQtyInfoClick: () -> Unit = {},
     onDurationChange: (Int) -> Unit,
     onReinitialize: () -> Unit,
     onValidateReinitialize: () -> Unit,
@@ -138,7 +152,12 @@ fun HolidayBagReminderPage(
                     ItemsInBagList(
                         modifier = if (uiState.isComplete) Modifier.alpha(0.5f) else Modifier,
                         items = uiState.items,
-                        onItemCheckedChange = onItemCheckedChange
+                        isEditingOn = uiState.isEditingOn,
+                        onItemCheckedChange = onItemCheckedChange,
+                        onItemQuantityChange = onItemQuantityChange,
+                        onItemDurationIndependantChange = onItemDurationIndependantChange,
+                        onItemDelete = onItemDelete,
+                        onFixedQtyInfoClick = onFixedQtyInfoClick
                     )
                 }
             }
@@ -157,6 +176,10 @@ fun HolidayBagReminderPage(
                 onDurationChanged = onReinitializeDurationChange,
             )
         }
+
+        if (showFixedQtyExplanation) {
+            FixedQtyExplanationDialog(onDismiss = onFixedQtyInfoClick)
+        }
     }
 }
 
@@ -170,19 +193,19 @@ fun HolidayBagReminderScreenPreview() {
                 name = "Summer Vacation",
                 durationDay = 14,
                 items = listOf(
-                    ItemInBagUiState(
+                    ItemInBagUiState.CheckMode(
                         id = "swimsuit",
                         name = "Swimsuit",
                         checked = true,
                         quantity = 2
                     ),
-                    ItemInBagUiState(
+                    ItemInBagUiState.CheckMode(
                         id = "sunglasses",
                         name = "Sunglasses",
                         checked = false,
                         quantity = 1
                     ),
-                    ItemInBagUiState(
+                    ItemInBagUiState.CheckMode(
                         id = "beach_towel",
                         name = "Beach Towel",
                         checked = true,
@@ -213,19 +236,19 @@ fun HolidayBagReminderScreenCompletePreview() {
                 name = "Summer Vacation",
                 durationDay = 14,
                 items = listOf(
-                    ItemInBagUiState(
+                    ItemInBagUiState.CheckMode(
                         id = "swimsuit",
                         name = "Swimsuit",
                         checked = true,
                         quantity = 2
                     ),
-                    ItemInBagUiState(
+                    ItemInBagUiState.CheckMode(
                         id = "sunglasses",
                         name = "Sunglasses",
                         checked = true,
                         quantity = 1
                     ),
-                    ItemInBagUiState(
+                    ItemInBagUiState.CheckMode(
                         id = "beach_towel",
                         name = "Beach Towel",
                         checked = true,
@@ -319,17 +342,17 @@ fun HolidayBagReminderScreenEditingPreview() {
                 name = "Summer Vacation",
                 durationDay = 14,
                 items = listOf(
-                    ItemInBagUiState(
+                    ItemInBagUiState.EditMode(
                         id = "swimsuit",
                         name = "Swimsuit",
-                        checked = true,
-                        quantity = 2
+                        quantity = 2,
+                        isDurationIndependant = true
                     ),
-                    ItemInBagUiState(
+                    ItemInBagUiState.EditMode(
                         id = "sunglasses",
                         name = "Sunglasses",
-                        checked = false,
-                        quantity = 1
+                        quantity = 1,
+                        isDurationIndependant = false
                     )
                 ),
                 isEditingOn = true

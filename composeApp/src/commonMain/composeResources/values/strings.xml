@@ -15,7 +15,7 @@
     <!-- Holiday Bag Screen -->
     <string name="items_list_empty">No items yet</string>
     <string name="duration_label">Duration: %1$d days</string>
-    <string name="quantity_label">Qty: %1$d</string>
+    <string name="quantity_column_title">Quantity</string>
     <string name="edit_duration_content_description">Edit duration</string>
     <string name="reinitialize_holiday_content_description">Reinitialize holiday</string>
     <string name="bag_complete_title">Bag complete</string>
@@ -23,6 +23,13 @@
     <string name="save_button">Save</string>
     <string name="validate_button">Validate</string>
     <string name="new_duration_label">New Duration (days)</string>
+    <string name="decrease_quantity_content_description">Decrease quantity</string>
+    <string name="increase_quantity_content_description">Increase quantity</string>
+    <string name="delete_item_content_description">Delete item</string>
+    <string name="fixed_qty_column_title">Fixed Qty</string>
+    <string name="fixed_qty_info_content_description">What does Fixed Qty mean?</string>
+    <string name="fixed_qty_explanation_text">When Fixed Qty is on, this item\'s quantity stays the same no matter how long the trip is. When it\'s off, the quantity is multiplied by the trip duration.</string>
+    <string name="ok_button">OK</string>
 
     <!-- Error Messages -->
     <string name="error_failed_to_load_holiday_data">Failed to load holiday data</string>

@@ -12,72 +12,72 @@ internal object StaticDatas {
             items = listOf(
                 ItemInBagData(
                     name = "Crême solaire",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Serviette",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Maillot de bain",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Tongs",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Casquette",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "T shirt",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Slips",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Chaussettes",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Short",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 2,
                 ),
                 ItemInBagData(
                     name = "Pantalon",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 2,
                 ),
                 ItemInBagData(
                     name = "Affaire de sport",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Chaussure supplementaire",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Gourde",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Belle tenue",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
             )
@@ -88,57 +88,57 @@ internal object StaticDatas {
             items = listOf(
                 ItemInBagData(
                     name = "Chaussure danse",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 2,
                 ),
                 ItemInBagData(
                     name = "Cahier danse",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Gourde",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "T shirt danse",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 2,
                 ),
                 ItemInBagData(
                     name = "Casquette",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "T shirt visite",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Slips",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Chaussettes",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Pantalon",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Affaire de sport",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Belle tenue",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
             )
@@ -149,77 +149,77 @@ internal object StaticDatas {
             items = listOf(
                 ItemInBagData(
                     name = "Lunettes de ski",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 2,
                 ),
                 ItemInBagData(
                     name = "Lunettes de soleil",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 2,
                 ),
                 ItemInBagData(
                     name = "Vetements de ski",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 2,
                 ),
                 ItemInBagData(
                     name = "Crême solaire",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Serviette",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Tenue pour douche",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Tongs",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Casquette",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "T shirt",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Slips",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Chaussettes",
-                    isDayDependant = true,
+                    isDayIndependant = false,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Pantalon",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 2,
                 ),
                 ItemInBagData(
                     name = "Chaussure supplementaire",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Gourde",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
                 ItemInBagData(
                     name = "Belle tenue",
-                    isDayDependant = false,
+                    isDayIndependant = true,
                     quantity = 1,
                 ),
             )

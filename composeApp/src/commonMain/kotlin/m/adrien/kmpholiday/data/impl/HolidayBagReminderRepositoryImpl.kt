@@ -39,9 +39,24 @@ class HolidayBagReminderRepositoryImpl(
         return true
     }
 
-    override suspend fun edit(itemId: ItemInBagId, newItem: ItemInBag): Boolean {
-        //TODO Items are not yet user-editable; on the roadmap but out of scope here.
-        return false
+    override suspend fun edit(holidayId: HolidayBagReminderId, itemId: ItemInBagId, newItem: ItemInBag): Boolean {
+        //TODO ensure seeded everywhere ?
+        seeder.ensureSeeded()
+        dao.updateItem(
+            holidayId = holidayId,
+            itemId = itemId,
+            name = newItem.name,
+            quantity = newItem.quantity,
+            isDurationIndependant = newItem.isDurationIndependant,
+        )
+        //TODO handle error
+        return true
+    }
+
+    override suspend fun deleteItem(holidayId: HolidayBagReminderId, itemId: ItemInBagId): Boolean {
+        seeder.ensureSeeded()
+        dao.deleteItem(holidayId, itemId)
+        return true
     }
 
     override suspend fun resetWithNewDuration(id: HolidayBagReminderId, duration: Int): Boolean {
